@@ -19,12 +19,18 @@
 <body>
 <%
     Student student = (Student) session.getAttribute("info");
+    try {
+        student = new StudentD().findWithId(student.getId());
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
 %>
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="../userImg/<%=student.getId()%>.jpeg"/>
-            <h1><%=student.getName()%></h1>
+            <img src="<%="http://localhost:8080/"+student.getImg()%>"/>
+            <h1><%=student.getName()%>
+            </h1>
         </div>
         <div id="menu">
             <ul>
@@ -59,17 +65,24 @@
                         String major = stuD.findWithId(student.getId()).getMajor();
                 %>
                 <tr>
-                    <td height="35"><%=stu.getId()%></td>
-                    <td><%=name%></td>
-                    <td><%=major%></td>
-                    <td><%=stu.getDatabase()%></td>
-                    <td><%=stu.getAndroid()%></td>
-                    <td><%=stu.getJsp()%></td>
-                    <td><a href="pdf.jsp?id=<%=stu.getId()%>&name=<%=name%>&major=<%=major%>&database=<%=stu.getDatabase()%>&android=<%=stu.getAndroid()%>&jsp=<%=stu.getJsp()%>">PDF</a></td>
+                    <td height="35"><%=stu.getId()%>
+                    </td>
+                    <td><%=name%>
+                    </td>
+                    <td><%=major%>
+                    </td>
+                    <td><%=stu.getDatabase()%>
+                    </td>
+                    <td><%=stu.getAndroid()%>
+                    </td>
+                    <td><%=stu.getJsp()%>
+                    </td>
+                    <td>
+                        <a href="pdf.jsp?id=<%=stu.getId()%>&name=<%=name%>&major=<%=major%>&database=<%=stu.getDatabase()%>&android=<%=stu.getAndroid()%>&jsp=<%=stu.getJsp()%>">PDF</a>
+                    </td>
                 </tr>
                 <%
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         out.print(e);
                     }
                 %>

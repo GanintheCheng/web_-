@@ -2,6 +2,7 @@
 <%@ page import="vo.Score" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dao.StudentD" %>
+<%@ page import="dao.TeacherD" %>
 <%--
   Created by IntelliJ IDEA.
   User: 007
@@ -19,13 +20,18 @@
 <body>
 <%
     Teacher teacher = (Teacher) session.getAttribute("info");
+    try {
+        teacher = new TeacherD().findWithId(teacher.getId());
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
     ArrayList<Score> stus = (ArrayList<Score>) session.getAttribute("onePageScore");
     int sumIndex = (int) session.getAttribute("sumScoreIndex");
 %>
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="../userImg/<%=teacher.getId()%>.jpeg"/>
+            <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
             <h1><%=teacher.getId()%>
             </h1>
         </div>

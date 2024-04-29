@@ -1,4 +1,5 @@
 <%@ page import="vo.Teacher" %>
+<%@ page import="dao.TeacherD" %>
 <%--
   Created by IntelliJ IDEA.
   User: 007
@@ -16,11 +17,16 @@
 <body>
 <%
     Teacher teacher = (Teacher) session.getAttribute("info");
+    try {
+        teacher = new TeacherD().findWithId(teacher.getId());
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
 %>
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="../userImg/<%=teacher.getId()%>.jpeg"/>
+            <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
             <h1><%=teacher.getId()%>
             </h1>
         </div>
@@ -39,7 +45,7 @@
             <hr/>
         </div>
         <div class="info">
-            <img src="../userImg/<%=teacher.getId()%>.jpeg" class="personalImg"><br>
+            <img src="<%="http://localhost:8080/"+teacher.getImg()%>" class="personalImg"><br>
             <form action="../upload_teacherImg" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<%=teacher.getId()%>">
                 <input type="file" name="img">

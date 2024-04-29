@@ -1,4 +1,5 @@
 <%@ page import="vo.Student" %>
+<%@ page import="dao.StudentD" %>
 <%--
   Created by IntelliJ IDEA.
   User: 007
@@ -19,12 +20,18 @@
 <body>
 <%
     Student student = (Student) session.getAttribute("info");
+    try {
+        student = new StudentD().findWithId(student.getId());
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
 %>
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="../userImg/<%=student.getId()%>.jpeg"/>
-            <h1><%=student.getName()%></h1>
+            <img src="<%="http://localhost:8080/"+student.getImg()%>"/>
+            <h1><%=student.getName()%>
+            </h1>
         </div>
         <div id="menu">
             <ul>
@@ -40,7 +47,8 @@
             <hr/>
         </div>
         <div class="info">
-            <img src="../userImg/<%=student.getId()%>.jpeg" class="personalImg"><br>
+            <%--             <img src="../userImg/<%=student.getId()%>.jpeg" class="personalImg"><br>--%>
+            <img src="<%="http://localhost:8080/"+student.getImg()%>" class="personalImg"><br>
             <form action="../upload_studentImg" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<%=student.getId()%>">
                 <input type="file" name="img">
@@ -48,24 +56,28 @@
             </form>
 
             <form action="../update_student_email" method="post">
-            <table width="400" frame="box" align="center" style="margin-top: 30px;">
-                <tr>
-                    <td style="font-size: 25px;font-weight: bold">学号</td>
-                    <td style="font-size: 25px;font-weight: bold"><%=student.getId()%></td>
-                </tr>
-                <tr>
-                    <td style="font-size: 25px;font-weight: bold">姓名</td>
-                    <td style="font-size: 25px;font-weight: bold"><%=student.getName()%></td>
-                </tr>
-                <tr>
-                    <td style="font-size: 25px;font-weight: bold">性别</td>
-                    <td style="font-size: 25px;font-weight: bold"><%=student.getSex()%></td>
-                </tr>
-                <tr>
-                    <td style="font-size: 25px;font-weight: bold">专业</td>
-                    <td style="font-size: 25px;font-weight: bold"><%=student.getMajor()%></td>
-                </tr>
-            </table>
+                <table width="400" frame="box" align="center" style="margin-top: 30px;">
+                    <tr>
+                        <td style="font-size: 25px;font-weight: bold">学号</td>
+                        <td style="font-size: 25px;font-weight: bold"><%=student.getId()%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 25px;font-weight: bold">姓名</td>
+                        <td style="font-size: 25px;font-weight: bold"><%=student.getName()%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 25px;font-weight: bold">性别</td>
+                        <td style="font-size: 25px;font-weight: bold"><%=student.getSex()%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 25px;font-weight: bold">专业</td>
+                        <td style="font-size: 25px;font-weight: bold"><%=student.getMajor()%>
+                        </td>
+                    </tr>
+                </table>
             </form>
             <button class="password-btn" style="margin-top: 30px; height: 40px">修改安全信息</button>
         </div>
@@ -79,11 +91,8 @@
         邮箱: &nbsp;&nbsp;<input type="email" name="email" value="<%=student.getEmail()%>"><br><br>
         新密码:<input type="password" name="password"><br>
         <hr>
-        <input style="float: right" type="submit" value="取消" onclick="function x() {
-          $('#add-dialog').dialog('close');
-        }">
-        <input style="float: right; margin-right: 25px" type="submit" value="保存"
-               onclick="this.form.action='../update_student_security'">
+        <input style="float: right" type="button" value="取消" onclick="closeDialog();">
+        <input style="float: right; margin-right: 25px" type="submit" value="保存" onclick="submitForm();">
     </form>
 </div>
 
@@ -98,6 +107,15 @@
     $('.password-btn').click(function () {
         $('#password-dialog').dialog('open');
     });
+
+    function closeDialog() {
+        $('#password-dialog').dialog('close');
+    }
+
+    function submitForm() {
+        this.form.action = '../update_student_security';
+        this.form.submit();
+    }
 </script>
 
 <style>

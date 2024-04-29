@@ -13,6 +13,7 @@ public class Student {
     private String school_date;
     private String major;
     private String email;
+    private String img; // 新添加的字段，用于存储图片数据
 
     public String getId(){
         return id;
@@ -68,5 +69,13 @@ public class Student {
 
     public void setEmail(String email){
         this.email = email;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

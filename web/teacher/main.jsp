@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="vo.Student" %>
 <%@ page import="vo.Teacher" %>
+<%@ page import="dao.TeacherD" %>
 <%--
   Created by IntelliJ IDEA.
   User: 007
@@ -21,13 +22,18 @@
 <body>
 <%
     Teacher teacher = (Teacher) session.getAttribute("info");
+    try {
+        teacher = new TeacherD().findWithId(teacher.getId());
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
     ArrayList<Student> stus = (ArrayList<Student>) session.getAttribute("onePageStudent");
     int sumIndex = (int) session.getAttribute("sumIndex");
 %>
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="../userImg/<%=teacher.getId()%>.jpeg"/>
+            <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
             <h1><%=teacher.getId()%>
             </h1>
         </div>
@@ -65,39 +71,43 @@
                 <%
                     for (Student stu : stus) {
                 %>
-                        <tr>
-                            <form method="post" action="../update_student">
-                                <td height="35"><%=stu.getId()%></td>
-                                <td><input value="<%=stu.getName()%>" name="stuname" class="table-input"></td>
-                                <td><input value="<%=stu.getSex()%>" name="stusex" class="table-input"></td>
-                                <td><%=stu.getSchool_date()%></td>
-                                <td><input value="<%=stu.getMajor()%>" name="stumajor" class="table-input" style="width: 110px"></td>
-                                <input value="<%=stu.getId()%>" name="stuno" type="hidden">
-                                <td><input type="submit" class="update-btn" value="修改">&nbsp;<a class="btn-delete"
-                                                                                           onclick="return confirm('确定要删除吗?');"
-                                                                                           href=<%="'../delete_student?id=" + stu.getId() + "'"%>>删除</a>&nbsp;&nbsp;<a href="../one_page_score?id=<%=stu.getId()%>">查看成绩</a>
-                                </td>
-                            </form>
-                        </tr>
+                <tr>
+                    <form method="post" action="../update_student">
+                        <td height="35"><%=stu.getId()%>
+                        </td>
+                        <td><input value="<%=stu.getName()%>" name="stuname" class="table-input"></td>
+                        <td><input value="<%=stu.getSex()%>" name="stusex" class="table-input"></td>
+                        <td><%=stu.getSchool_date()%>
+                        </td>
+                        <td><input value="<%=stu.getMajor()%>" name="stumajor" class="table-input" style="width: 110px">
+                        </td>
+                        <input value="<%=stu.getId()%>" name="stuno" type="hidden">
+                        <td><input type="submit" class="update-btn" value="修改">&nbsp;<a class="btn-delete"
+                                                                                          onclick="return confirm('确定要删除吗?');"
+                                                                                          href=<%="'../delete_student?id=" + stu.getId() + "'"%>>删除</a>&nbsp;&nbsp;<a
+                                href="../one_page_score?id=<%=stu.getId()%>">查看成绩</a>
+                        </td>
+                    </form>
+                </tr>
                 <%
                     }
                 %>
             </table>
         </div>
         <%
-            if (sumIndex > 1){
+            if (sumIndex > 1) {
         %>
-                <div id="index">
-                    <a href="../one_page_student?index=1">首页</a>
-                    <%
-                        for (int i=1; i<=sumIndex; i++){
-                    %>
-                            <a href="../one_page_student?index=<%=i%>">第<%=i%>页</a>
-                    <%
-                        }
-                    %>
-                    <a href="../one_page_student?index=<%=sumIndex%>">尾页</a>
-                </div>
+        <div id="index">
+            <a href="../one_page_student?index=1">首页</a>
+            <%
+                for (int i = 1; i <= sumIndex; i++) {
+            %>
+            <a href="../one_page_student?index=<%=i%>">第<%=i%>页</a>
+            <%
+                }
+            %>
+            <a href="../one_page_student?index=<%=sumIndex%>">尾页</a>
+        </div>
         <%
             }
         %>

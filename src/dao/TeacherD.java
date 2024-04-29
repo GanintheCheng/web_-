@@ -77,8 +77,19 @@ public class TeacherD {
             tea.setName(rs.getString("name"));
             tea.setEmail(rs.getString("email"));
             tea.setSex(rs.getString("sex"));
+            tea.setImg(rs.getString("img"));
         }
         return tea;
+    }
+
+    public void updateImg(String id, String img) throws Exception {
+        initConnection();
+        String sql = "update teacher set img=? where id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, img);
+        ps.setString(2, id);
+        ps.executeUpdate();
+        closeConnection();
     }
 
     private void initConnection() throws Exception {

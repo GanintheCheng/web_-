@@ -113,6 +113,16 @@ public class StudentD {
         closeConnection();
     }
 
+    public void updateImg(String id, String img) throws Exception {
+        initConnection();
+        String sql = "update student set img=? where id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, img);
+        ps.setString(2, id);
+        ps.executeUpdate();
+        closeConnection();
+    }
+
     private Student getStudent(ResultSet rs) throws SQLException {
         Student stu = null;
         if (rs.next()) {
@@ -124,6 +134,7 @@ public class StudentD {
             stu.setSchool_date(rs.getString("school_date"));
             stu.setMajor(rs.getString("major"));
             stu.setEmail(rs.getString("email"));
+            stu.setImg(rs.getString("img"));
         }
         return stu;
     }
