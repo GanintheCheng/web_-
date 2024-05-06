@@ -1,10 +1,9 @@
-<%@ page import="vo.Student" %>
-<%@ page import="dao.StudentD" %>
+<%@ page import="model.Student" %>
+<%@ page import="dao.impl.StudentDImpl" %>
 <%--
   Created by IntelliJ IDEA.
-  User: 007
-  Date: 2018/11/1
-  Time: 20:11
+  User: gzc
+  Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -21,7 +20,7 @@
 <%
     Student student = (Student) session.getAttribute("info");
     try {
-        student = new StudentD().findWithId(student.getId());
+        student = new StudentDImpl().findWithId(student.getId());
     } catch (Exception e) {
         throw new RuntimeException(e);
     }

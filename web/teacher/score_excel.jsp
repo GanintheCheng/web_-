@@ -1,14 +1,15 @@
-<%@ page import="dao.ScoreD" %>
-<%@ page import="vo.Score" %>
+<%@ page import="dao.impl.ScoreDImpl" %>
+<%@ page import="model.Score" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dao.StudentD" %>
+<%@ page import="dao.impl.StudentDImpl" %>
+<%@ page import="dao.impl.StudentDImpl" %>
 <%--
   Created by IntelliJ IDEA.
-  User: 007
-  Date: 2018/11/1
-  Time: 20:11
+  User: gzc
+  Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="application/msexcel" language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -31,8 +32,8 @@
     </tr>
     <%
         try {
-            ScoreD scoD = new ScoreD();
-            StudentD stuD = new StudentD();
+            ScoreDImpl scoD = new ScoreDImpl();
+            StudentDImpl stuD = new StudentDImpl();
             ArrayList<Score> stus = scoD.getOnePage(1, 10000);
             for (Score stu : stus) {
                 String name = stuD.findWithId(stu.getId()).getName();

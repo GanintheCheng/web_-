@@ -1,7 +1,7 @@
-<%@ page import="dao.TeacherD" %>
-<%@ page import="dao.StudentD" %>
-<%@ page import="vo.Student" %>
-<%@ page import="vo.Teacher" %>
+<%@ page import="dao.impl.TeacherDImpl" %>
+<%@ page import="dao.impl.StudentDImpl" %>
+<%@ page import="model.Student" %>
+<%@ page import="model.Teacher" %>
 <%@ page import="java.util.Properties" %>
 <%@ page import="javax.mail.Session" %>
 <%@ page import="javax.mail.internet.MimeMessage" %>
@@ -11,10 +11,9 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="javax.mail.Transport" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: 007
-  Date: 2018/11/28
-  Time: 19:11
+   Created by IntelliJ IDEA.
+  User: gzc
+  Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
@@ -29,13 +28,13 @@
 <h1 style="margin: 50px 80px; color: darkgray; font-family: cursive;">欢迎来到教务系统</h1>
 <%
     String id = request.getParameter("user");
-    TeacherD teacherD = new TeacherD();
-    StudentD studentD = new StudentD();
+    TeacherDImpl teacherDImpl = new TeacherDImpl();
+    StudentDImpl studentDImpl = new StudentDImpl();
     Teacher teacher = null;
     Student student = null;
     try {
-        teacher = teacherD.findWithId(id);
-        student = studentD.findWithId(id);
+        teacher = teacherDImpl.findWithId(id);
+        student = studentDImpl.findWithId(id);
     } catch (Exception e) {
         out.print(e);
     }

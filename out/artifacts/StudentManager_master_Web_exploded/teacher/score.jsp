@@ -1,13 +1,12 @@
-<%@ page import="vo.Teacher" %>
-<%@ page import="vo.Score" %>
+<%@ page import="model.Teacher" %>
+<%@ page import="model.Score" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dao.StudentD" %>
-<%@ page import="dao.TeacherD" %>
+<%@ page import="dao.impl.StudentDImpl" %>
+<%@ page import="dao.impl.TeacherDImpl" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: 007
-  Date: 2018/11/1
-  Time: 20:11
+   Created by IntelliJ IDEA.
+  User: gzc
+  Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -21,7 +20,7 @@
 <%
     Teacher teacher = (Teacher) session.getAttribute("info");
     try {
-        teacher = new TeacherD().findWithId(teacher.getId());
+        teacher = new TeacherDImpl().findWithId(teacher.getId());
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
@@ -64,7 +63,7 @@
                     </tr>
                     <%
                         try {
-                            StudentD stuD = new StudentD();
+                            StudentDImpl stuD = new StudentDImpl();
                             for (Score stu : stus) {
                                 String name = stuD.findWithId(stu.getId()).getName();
                                 String major = stuD.findWithId(stu.getId()).getMajor();

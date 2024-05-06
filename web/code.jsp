@@ -3,10 +3,9 @@
 <%@ page import="java.util.Random" %>
 <%@ page import="javax.imageio.ImageIO" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: 007
-  Date: 2018/11/22
-  Time: 18:48
+   Created by IntelliJ IDEA.
+  User: gzc
+  Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="image/JPEG;charset=UTF-8" pageEncoding="UTF-8" language="java" %>

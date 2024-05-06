@@ -1,12 +1,13 @@
-<%@ page import="dao.TeacherD" %>
-<%@ page import="dao.StudentD" %>
-<%@ page import="vo.Teacher" %>
-<%@ page import="vo.Student" %>
+<%@ page import="dao.impl.TeacherDImpl" %>
+<%@ page import="dao.impl.StudentDImpl" %>
+<%@ page import="model.Teacher" %>
+<%@ page import="model.Student" %>
+<%@ page import="dao.impl.StudentDImpl" %>
+<%@ page import="dao.impl.TeacherDImpl" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: 007
-  Date: 2018/10/25
-  Time: 18:55
+   Created by IntelliJ IDEA.
+  User: gzc
+  Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,8 +17,8 @@
 </head>
 <body>
 <%
-    TeacherD teacherD = new TeacherD();
-    StudentD studentD = new StudentD();
+    TeacherDImpl teacherDImpl = new TeacherDImpl();
+    StudentDImpl studentDImpl = new StudentDImpl();
     Teacher teacher = null;
     Student student = null;
 
@@ -28,8 +29,8 @@
             if ("name".equals(cookieName)) {
                 String user = c.getValue();
                 try {
-                    teacher = teacherD.findWithId(user);
-                    student = studentD.findWithId(user);
+                    teacher = teacherDImpl.findWithId(user);
+                    student = studentDImpl.findWithId(user);
                 } catch (Exception e) {
                     out.print(e);
                 }

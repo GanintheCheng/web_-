@@ -1,12 +1,12 @@
-<%@ page import="dao.StudentD" %>
-<%@ page import="vo.Student" %>
-<%@ page import="dao.ScoreD" %>
-<%@ page import="vo.Score" %>
+<%@ page import="dao.impl.StudentDImpl" %>
+<%@ page import="model.Student" %>
+<%@ page import="dao.impl.ScoreDImpl" %>
+<%@ page import="model.Score" %>
+<%@ page import="dao.impl.StudentDImpl" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: 007
-  Date: 2018/11/1
-  Time: 20:11
+   Created by IntelliJ IDEA.
+  User: gzc
+  Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -20,7 +20,7 @@
 <%
     Student student = (Student) session.getAttribute("info");
     try {
-        student = new StudentD().findWithId(student.getId());
+        student = new StudentDImpl().findWithId(student.getId());
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
@@ -58,8 +58,8 @@
                 </tr>
                 <%
                     try {
-                        ScoreD scoD = new ScoreD();
-                        StudentD stuD = new StudentD();
+                        ScoreDImpl scoD = new ScoreDImpl();
+                        StudentDImpl stuD = new StudentDImpl();
                         Score stu = scoD.findWithId(student.getId());
                         String name = stuD.findWithId(student.getId()).getName();
                         String major = stuD.findWithId(student.getId()).getMajor();
