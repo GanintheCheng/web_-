@@ -34,11 +34,6 @@ public class check_login extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
 
-        TeacherDImpl teacherDImpl = new TeacherDImpl();
-        StudentDImpl studentDImpl = new StudentDImpl();
-        Teacher teacher = null;
-        Student student = null;
-
         try {
             Object userInfo = LoginServiceImpl.checkLogin(user, password);
             if (userInfo instanceof Teacher) {

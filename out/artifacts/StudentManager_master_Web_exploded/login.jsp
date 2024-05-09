@@ -44,7 +44,8 @@
                 <input type="checkbox" name="remember" value="true">
                 <span>记住我</span>
             </div>
-            <a href="forget.jsp" class="help">登录遇到问题？</a>
+            <a href="adminLogin.jsp" class="help" style="margin-left: 20px">管理员登录</a>
+            <a href="forget.jsp" class="help">找回密码</a>
             <input type="submit" value="登录" class="btn btn-primary btn-lg btn-block" />
         </div>
     </form>

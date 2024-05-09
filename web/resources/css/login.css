@@ -73,7 +73,7 @@ body{
 .form-group .help{
     float: right;
     position: relative;
-    margin: 25px 0 35px;
+    margin: 25px 20px 35px 0;
     font-size: 14px;
     color: #999;
 }

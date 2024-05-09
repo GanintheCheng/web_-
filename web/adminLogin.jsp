@@ -1,8 +1,9 @@
 <%--
    Created by IntelliJ IDEA.
-  User: gzc
-  Date: 2024
-  To change this template use File | Settings | File Templates.
+   User: ~Ganinthe.Cheng
+   Date: 2024/5/9
+   Time: 上午9:38
+   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -10,9 +11,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>请登陆</title>
+    <title>管理员登录</title>
     <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link href="resources/css/login.css" type="text/css" rel="stylesheet" />
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .main {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <script>
@@ -27,28 +40,17 @@
         }
         return true;
     }
-
 </script>
-<h1 style="margin: 50px 80px; color: darkgray; font-family: cursive;">欢迎来到教务系统</h1>
 <div class="main">
-    <h5 class="title">
-        <a href="login.jsp" id="login">登录</a>
-        <b>&nbsp;·&nbsp;</b>
-        <a href="register.jsp" id="register">注册</a>
-    </h5>
-    <form action="check_login" method="post" onsubmit="return check(this)">
+    <h1 style="color: darkgray; font-family: cursive;">欢迎管理员登录</h1>
+    <form action="admin_check_login" method="post" onsubmit="return check(this)">
         <div class="form-group">
-            <input type="text" name="user" class="form-control user" placeholder="请输入用户名">
+            <input type="text" name="user" class="form-control user" placeholder="请输入管理员账号">
             <input type="password" name="password" class="form-control password" placeholder="请输入密码">
-            <div class="remember-btn">
-                <input type="checkbox" name="remember" value="true">
-                <span>记住我</span>
-            </div>
-            <a href="adminLogin.jsp" class="help" style="margin-left: 20px">管理员登录</a>
-            <a href="forget.jsp" class="help">找回密码</a>
             <input type="submit" value="登录" class="btn btn-primary btn-lg btn-block" />
         </div>
     </form>
+    <a href="index.jsp" style="margin-top: 20px; display: block;">返回首页</a>
 </div>
 <script src="resources/js/jquery-3.2.1.min.js"></script>
 <script src="resources/js/popper.min.js"></script>
