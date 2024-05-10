@@ -9,8 +9,8 @@ import model.Teacher;
 public class AdminLoginServiceImpl{
     private final AdminDImpl AdminDao=new AdminDImpl();
 
-    public boolean checkAdminLogin(String user, String password) throws Exception {
-        Admin admin = AdminDao.checkAccount(user, password);
+    public boolean checkAdminLogin(String account, String password) throws Exception {
+        Admin admin = AdminDao.checkAccount(account, password);
         if(admin != null) {
             return true;
         }

@@ -26,16 +26,16 @@ public class admin_check_login extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
-        String user = request.getParameter("user");
+        String account = request.getParameter("account");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
 
         try {
-            boolean isAdminValid = adminLoginServiceImpl.checkAdminLogin(user, password);
+            boolean isAdminValid = adminLoginServiceImpl.checkAdminLogin(account, password);
             if (isAdminValid) {
-                session.setAttribute("admin", user);
+                session.setAttribute("admin", account);
                 if (remember != null) {
-                    Cookie adminCookie = new Cookie("admin", user);
+                    Cookie adminCookie = new Cookie("admin", account);
                     adminCookie.setMaxAge(10);
                     response.addCookie(adminCookie);
                 }

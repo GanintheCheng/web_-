@@ -17,6 +17,10 @@ public class StudentServiceIml implements StudentService {
         this.scoreDao = new ScoreDImpl();
     }
 
+    public ArrayList<Student> findWithPartialId(String partialId) throws Exception {
+        return studentDao.findWithPartialId(partialId);
+    }
+
     public void addStudent(String id, String name, String sex, String major, String school_date) throws Exception {
         studentDao.insertStudent(id, name, sex, school_date, major);
         scoreDao.insertScore(id);
@@ -51,5 +55,9 @@ public class StudentServiceIml implements StudentService {
 
     public void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor) throws Exception {
         studentDao.updateStudentInfo(stuno, stuname, stusex, stumajor);
+    }
+
+    public void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor, String password) throws Exception {
+        studentDao.updateStudentInfo(stuno, stuname, stusex, stumajor,password);
     }
 }

@@ -154,7 +154,7 @@
     }
 
 	.table-input{
-        width: 40px;
+        min-width: 80px;
         text-align: center;
         border-top: none;
 		border-left: none;

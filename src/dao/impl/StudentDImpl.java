@@ -32,6 +32,20 @@ public class StudentDImpl extends BaseDao implements StudentD {
         return stu;
     }
 
+    public ArrayList<Student> findWithPartialId(String partialId) throws Exception {
+        initConnection();
+        Statement stat = conn.createStatement();
+        String sql = "SELECT * FROM student WHERE id LIKE '%" + partialId + "%'";
+        ResultSet rs = stat.executeQuery(sql);
+        ArrayList<Student> students = new ArrayList<>();
+        while (rs.next()) {
+            Student student = getStudent(rs);
+            students.add(student);
+        }
+        closeConnection();
+        return students;
+    }
+
     @Override
     public ArrayList<Student> findWithName(String name) throws Exception {
         ArrayList<Student> al = new ArrayList<>();
@@ -108,6 +122,20 @@ public class StudentDImpl extends BaseDao implements StudentD {
         ps.executeUpdate();
         closeConnection();
     }
+
+    public void updateStudentInfo(String id, String name, String sex, String major, String password) throws Exception {
+        initConnection();
+        String sql = "update student set name=?, sex=?, major=?, password=? where id=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, name);
+        ps.setString(2, sex);
+        ps.setString(3, major);
+        ps.setString(4, password);
+        ps.setString(5, id);
+        ps.executeUpdate();
+        closeConnection();
+    }
+
 
     @Override
     public void updateStudentSecurity(String id, String email, String password) throws Exception {

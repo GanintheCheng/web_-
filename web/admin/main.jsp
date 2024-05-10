@@ -18,10 +18,10 @@
 </head>
 <body>
 <%
-    String adminId =(String)session.getAttribute("admin");
+    String adminAccount = (String) session.getAttribute("admin");
     Admin admin = new Admin();
     try {
-        admin = new AdminDImpl().findWithId(adminId);
+        admin = new AdminDImpl().findWithAccount(adminAccount);
     } catch (Exception e) {
         throw new RuntimeException(e);
     }
@@ -29,14 +29,16 @@
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src=http://localhost:8080/"+"默认.jpeg"/>
-            <h1><%=admin.getId()%></h1>
+            <img src=http://localhost:8080/stu/userImg/默认.jpeg>
+            <h1><%=admin.getAccount()%>
+            </h1>
         </div>
         <div id="menu">
             <ul>
-                <li class="current_page_item"><a href="teacher_management.jsp">老师管理</a></li>
-                <li><a href="student_management.jsp">学生管理</a></li>
-                <li><a href="score_management.jsp">成绩管理</a></li>
+                <li class="current_page_item"><a href="main.jsp">个人信息</a></li>
+                <li><a href="../one_page_teacher_admin">老师管理</a></li>
+                <li><a href="../one_page_student_admin">学生管理</a></li>
+                <li><a href="../one_page_score_admin">成绩管理</a></li>
                 <li><a onclick="return confirm('确认退出?');" href="../exit">退出</a></li>
             </ul>
         </div>
@@ -44,7 +46,18 @@
     <div id="main">
         <h2>欢迎管理员</h2>
         <hr/>
-        <!-- 这里可以根据需要添加管理员首页的其他内容 -->
+        <div class="info">
+            <img src=http://localhost:8080/stu/userImg/默认.jpeg class="personalImg"><br>
+            <form action="../upload_teacherImg" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<%=admin.getAccount()%>">
+            </form>
+            <form method="post" action="../update_admin" class="personalForm">
+                <input name="uid" value="<%=admin.getId()%>" type="hidden">
+                账号: <input type="text" name="account" value="<%=admin.getAccount()%>" class="personalInput"><br>
+                密码: <input type="text" name="password" value="<%=admin.getPassword()%>" class="personalInput"><br>
+                <input type="submit" value="保存" style="width: 100px; height: 30px; margin-top: 20px">
+            </form>
+        </div>
     </div>
 </div>
 </body>
