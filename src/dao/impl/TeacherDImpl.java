@@ -14,7 +14,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
     public Teacher checkAccount(String id, String password) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();
-        String sql = "select * from teacher where id = '" + id + "' and password = '" + password + "'";
+        String sql = "select * from teacher where account = '" + id + "' and password = '" + password + "'";
         ResultSet rs = stat.executeQuery(sql);
         Teacher tea = getTeacher(rs);
         closeConnection();
@@ -35,11 +35,12 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
     @Override
     public Teacher insertTeacher(String id, String password, String email) throws Exception {
         initConnection();
-        String sql = "insert into teacher(id, password, email) values(?, ?, ?)";
+        String sql = "insert into teacher(id, account, password, email) values(?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, id);
-        ps.setString(2, password);
-        ps.setString(3, email);
+        ps.setString(2, id);
+        ps.setString(3, password);
+        ps.setString(4, email);
         ps.executeUpdate();
         Teacher teacher = findWithId(id);
         closeConnection();
@@ -48,13 +49,14 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
 
     public Teacher insertTeacher(String id, String name, String password, String sex, String email) throws Exception {
         initConnection();
-        String sql = "insert into teacher(id, name, password, sex, email) values(?, ?, ?, ?, ?)";
+        String sql = "insert into teacher(id, account, name, password, sex, email) values(?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, id);
-        ps.setString(2, name);
-        ps.setString(3, password);
-        ps.setString(4, sex);
-        ps.setString(5, email);
+        ps.setString(2, id);
+        ps.setString(3, name);
+        ps.setString(4, password);
+        ps.setString(5, sex);
+        ps.setString(6, email);
         ps.executeUpdate();
         Teacher teacher = findWithId(id);
         closeConnection();
@@ -96,6 +98,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         if (rs.next()) {
             tea = new Teacher();
             tea.setId(rs.getString("id"));
+            tea.setAccount(rs.getString("Account"));
             tea.setPassword(rs.getString("password"));
             tea.setName(rs.getString("name"));
             tea.setEmail(rs.getString("email"));
@@ -183,5 +186,23 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         int i = stat.executeUpdate(sql);
         closeConnection();
         return i == 1;
+    }
+
+    public String getMaxTeacherId() throws Exception {
+        initConnection();
+        String maxIdString = null;
+        try {
+            String sql = "SELECT MAX(CAST(id AS UNSIGNED)) AS max_id FROM teacher";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                long maxId = rs.getLong("max_id");
+                // 将最大值加一并转换为字符串
+                maxIdString = Long.toString(maxId + 1);
+            }
+        } finally {
+            closeConnection();
+        }
+        return maxIdString;
     }
 }

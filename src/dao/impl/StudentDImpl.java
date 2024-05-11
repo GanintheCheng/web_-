@@ -14,7 +14,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
     public Student checkAccount(String user, String password) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();
-        String sql = "select * from student where id = '" + user + "' and password = '" + password + "'";
+        String sql = "select * from student where account = '" + user + "' and password = '" + password + "'";
         ResultSet rs = stat.executeQuery(sql);
         Student stu = getStudent(rs);
         closeConnection();
@@ -61,13 +61,14 @@ public class StudentDImpl extends BaseDao implements StudentD {
     @Override
     public boolean insertStudent(String id, String name, String sex, String school_date, String major) throws Exception {
         initConnection();
-        String sql = "insert into student(id, name, sex, school_date, major) values(?, ?, ?, ?, ?)";
+        String sql = "insert into student(id, account, name, sex, school_date, major) values(?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, id);
-        ps.setString(2, name);
-        ps.setString(3, sex);
-        ps.setString(4, school_date);
-        ps.setString(5, major);
+        ps.setString(2, id);
+        ps.setString(3, name);
+        ps.setString(4, sex);
+        ps.setString(5, school_date);
+        ps.setString(6, major);
         int i = ps.executeUpdate();
         closeConnection();
         return i == 1;
@@ -167,6 +168,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
         if (rs.next()) {
             stu = new Student();
             stu.setId(rs.getString("id"));
+            stu.setAccount(rs.getString("account"));
             stu.setPassword(rs.getString("password"));
             stu.setName(rs.getString("name"));
             stu.setSex(rs.getString("sex"));
@@ -191,5 +193,23 @@ public class StudentDImpl extends BaseDao implements StudentD {
             stu.setEmail(rs.getString("email"));
             al.add(stu);
         }
+    }
+
+    public String getMaxStudentId() throws Exception {
+        initConnection();
+        String maxIdString = null;
+        try {
+            String sql = "SELECT MAX(CAST(id AS UNSIGNED)) AS max_id FROM student";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                long maxId = rs.getLong("max_id");
+                // 将最大值加一并转换为字符串
+                maxIdString = Long.toString(maxId + 1);
+            }
+        } finally {
+            closeConnection();
+        }
+        return maxIdString;
     }
 }

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
+import service.impl.StudentServiceIml;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,16 +21,16 @@ import java.util.List;
 
 @WebServlet("/upload_studentImg")
 public class upload_studentImg extends HttpServlet {
-    StudentDImpl studentDImpl = new StudentDImpl();
+    StudentServiceIml studentServiceIml = new StudentServiceIml();
 
     @Override
+
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
         PrintWriter out = response.getWriter();
 
-        // Check that we have a file upload request
         boolean isMultipart = JakartaServletDiskFileUpload.isMultipartContent(request);
 
         if (!isMultipart) {
@@ -41,7 +42,6 @@ public class upload_studentImg extends HttpServlet {
         JakartaServletDiskFileUpload upload = new JakartaServletDiskFileUpload(factory);
 
         try {
-            // Parse the request
             List<DiskFileItem> items = upload.parseRequest(request);
             String id = "";
             String fileName = "";
@@ -57,10 +57,9 @@ public class upload_studentImg extends HttpServlet {
                         fileName = new Date().getTime() + "." + FilenameUtils.getExtension(fileName);
                     }
                     item.write(Path.of(request.getServletContext().getRealPath("/userImg") + "//" + fileName));
-                    out.print("<script>alert(\"上传成功!\");window.location.href='student/personal.jsp';</script>");
                 }
             }
-            studentDImpl.updateImg(id, "stu/userImg" + "/" + fileName);
+            studentServiceIml.updateImg(id, "stu/userImg" + "/" + fileName);
             response.sendRedirect(request.getContextPath() + "/student/personal.jsp");
         } catch (Exception e) {
             out.print(e);

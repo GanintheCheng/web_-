@@ -34,7 +34,7 @@
     <div id="header">
         <div id="logo">
             <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
-            <h1><%=teacher.getId()%>
+            <h1><%=teacher.getName()%>
             </h1>
         </div>
         <div id="menu">
@@ -69,7 +69,8 @@
                     <th>操作</th>
                 </tr>
                 <%
-                    for (Student stu : stus) {
+                    if (!stus.isEmpty() && stus.get(0) != null) {
+                        for (Student stu : stus) {
                 %>
                 <tr>
                     <form method="post" action="../update_student">
@@ -88,6 +89,13 @@
                                 href="../one_page_score?id=<%=stu.getId()%>">查看成绩</a>
                         </td>
                     </form>
+                </tr>
+                <%
+                    }
+                } else {
+                %>
+                <tr>
+                    <td colspan="6">未找到匹配的学生信息。</td>
                 </tr>
                 <%
                     }
@@ -117,7 +125,7 @@
 <%--添加学生信息对话框--%>
 <div id="add-dialog" title="添加学生信息">
     <form id="add-form" method="post">
-        学号:<input name="id" type="text"><br>
+        <%--        学号:<input name="id" type="text"><br>--%>
         姓名:<input name="name" type="text"><br>
         性别:<input name="sex" type="text"><br>
         专业:<input name="major" type="text"><br>

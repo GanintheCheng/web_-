@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
+import service.impl.TeacherServiceIml;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +21,7 @@ import java.util.List;
 
 @WebServlet("/upload_teacherImg")
 public class upload_teacherImg extends HttpServlet {
-    TeacherDImpl teacherDImpl = new TeacherDImpl();
-
+    TeacherServiceIml teacherServiceIml = new TeacherServiceIml();
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
@@ -53,10 +53,9 @@ public class upload_teacherImg extends HttpServlet {
                         fileName = new Date().getTime() + "." + FilenameUtils.getExtension(fileName);
                     }
                     item.write(Path.of(request.getServletContext().getRealPath("/userImg") + "//" + fileName));
-                    out.print("<script>alert(\"上传成功!\");window.location.href='teacher/personal.jsp';</script>");
                 }
             }
-            teacherDImpl.updateImg(id, "stu/userImg" + "/" + fileName);
+            teacherServiceIml.updateImg(id, "stu/userImg" + "/" + fileName);
             response.sendRedirect(request.getContextPath() + "/teacher/personal.jsp");
         } catch (Exception e) {
             out.print(e);

@@ -108,7 +108,7 @@
                 Session s = Session.getInstance(prop);
 
                 MimeMessage message = new MimeMessage(s);
-                message.setFrom(new InternetAddress("1837761918@qq.com@qq.com"));
+                message.setFrom(new InternetAddress("1837761918@qq.com"));
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(toMail));
 
                 message.setSubject(title);
@@ -117,7 +117,7 @@
                 message.saveChanges();
 
                 Transport transport = s.getTransport("smtp");
-                transport.connect("smtp.qq.com", "1837761918@qq.com@qq.com", "jsianyzwfwajdabe");
+                transport.connect("smtp.qq.com", "1837761918@qq.com", "jsianyzwfwajdabe");
                 transport.sendMessage(message, message.getAllRecipients());
                 transport.close();
                 session.setAttribute("reset", content);

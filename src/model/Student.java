@@ -3,6 +3,7 @@ package model;
 public class Student {
 
     private String id;
+    private String account;
     private String password;
     private String name;
     private String sex;
@@ -11,59 +12,67 @@ public class Student {
     private String email;
     private String img; // 新添加的字段，用于存储图片数据
 
-    public String getId(){
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getSex(){
+    public String getSex() {
         return sex;
     }
 
-    public String getSchool_date(){
+    public String getSchool_date() {
         return school_date;
     }
 
-    public String getMajor(){
+    public String getMajor() {
         return major;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setSex(String sex){
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-    public void setSchool_date(String school_date){
+    public void setSchool_date(String school_date) {
         this.school_date = school_date;
     }
 
-    public void setMajor(String major){
+    public void setMajor(String major) {
         this.major = major;
     }
 
-    public void setEmail(String email){
+    public void setEmail(String email) {
         this.email = email;
     }
 

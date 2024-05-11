@@ -28,17 +28,11 @@ public class admin_check_login extends HttpServlet {
 
         String account = request.getParameter("account");
         String password = request.getParameter("password");
-        String remember = request.getParameter("remember");
 
         try {
             boolean isAdminValid = adminLoginServiceImpl.checkAdminLogin(account, password);
             if (isAdminValid) {
                 session.setAttribute("admin", account);
-                if (remember != null) {
-                    Cookie adminCookie = new Cookie("admin", account);
-                    adminCookie.setMaxAge(10);
-                    response.addCookie(adminCookie);
-                }
                 response.sendRedirect("admin/main.jsp");
             } else {
                 out.print("<script>alert(\"管理员用户名或密码错误！\")</script>");

@@ -32,6 +32,7 @@ public class update_score_admin extends HttpServlet {
 
         try {
             scoreUpdateService.updateScores(id, database, android, jsp);
+            out.println("<script>alert(\"修改成功,请重新登录\");</script>");
             response.sendRedirect("one_page_score_admin");
         } catch (Exception e) {
             out.print(e);

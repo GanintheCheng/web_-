@@ -40,7 +40,7 @@ public class check_login extends HttpServlet {
                 session.setAttribute("info", userInfo);
                 if (remember != null) {
                     Cookie userCookie = new Cookie("name", user);
-                    userCookie.setMaxAge(10);
+                    userCookie.setMaxAge(999999999);
                     response.addCookie(userCookie);
                 }
                 response.sendRedirect("one_page_student");
@@ -48,7 +48,7 @@ public class check_login extends HttpServlet {
                 session.setAttribute("info", userInfo);
                 if (remember != null) {
                     Cookie userCookie = new Cookie("name", user);
-                    userCookie.setMaxAge(10);
+                    userCookie.setMaxAge(999999999);
                     response.addCookie(userCookie);
                 }
                 response.sendRedirect("student/main.jsp");

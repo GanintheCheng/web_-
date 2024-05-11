@@ -12,6 +12,7 @@ import model.Teacher;
 import service.StudentService;
 import service.impl.StudentServiceIml;
 import service.impl.TeacherServiceIml;
+import util.myuntils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,17 +31,28 @@ public class add_teacher_admin extends HttpServlet {
         PrintWriter out = response.getWriter();
 
 
-        String id = request.getParameter("teacherId");
+//        String id = request.getParameter("teacherId");
+        String id = null;
+        try {
+            id = myuntils.getMaxTeaId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         String name = request.getParameter("teacherName");
         String password = request.getParameter("teacherPassword");
         String sex = request.getParameter("teacherSex");
         String email = request.getParameter("teacherEmail");
 
         try {
-            teacherService.addTeacher(id, name,password, sex, email);
+            teacherService.addTeacher(id, name, password, sex, email);
+            out.println("<script>");
+            out.println("alert('添加的教师账号为" + id + ",可用其登录');");
+            out.println("window.location.href='one_page_teacher_admin';");
+            out.println("</script>");
+            out.flush();
         } catch (Exception e) {
             out.print(e);
         }
-        response.sendRedirect("one_page_teacher_admin");
+//        response.sendRedirect("one_page_teacher_admin");
     }
 }

@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.StudentService;
 import service.impl.StudentServiceIml;
+import util.myuntils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,8 +33,12 @@ public class add_student extends HttpServlet {
 
         StudentDImpl studentDImpl = new StudentDImpl();
         ScoreDImpl scoreDImpl = new ScoreDImpl();
-
-        String id = request.getParameter("id");
+        String id = null;
+        try {
+            id = myuntils.getMaxStuId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         String name = request.getParameter("name");
         String sex = request.getParameter("sex");
         String major = request.getParameter("major");
@@ -44,6 +49,11 @@ public class add_student extends HttpServlet {
         } catch (Exception e) {
             out.print(e);
         }
-        response.sendRedirect("one_page_student");
+        out.println("<script>");
+        out.println("alert('添加的学生账号为" + id + ",可用其登录');");
+        out.println("window.location.href='one_page_student';");
+        out.println("</script>");
+        out.flush();
+//        response.sendRedirect("one_page_student");
     }
 }

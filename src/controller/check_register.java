@@ -2,6 +2,7 @@ package controller;
 
 import dao.impl.TeacherDImpl;
 import model.Teacher;
+import util.myuntils;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,8 +31,13 @@ public class check_register extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         String email = request.getParameter("email");
-        String user = request.getParameter("user");
-        String password = request.getParameter("password1");
+        String user = null;
+        try {
+            user = myuntils.getMaxTeaId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        String password = request.getParameter("password");
         String code = request.getParameter("code");
 
         PrintWriter out = response.getWriter();
@@ -46,7 +52,11 @@ public class check_register extends HttpServlet {
                 Teacher teacher = registerService.registerTeacher(user, password, email);
                 if (teacher != null) {
                     session.setAttribute("info", teacher);
-                    response.sendRedirect("one_page_student");
+                    out.println("<script>");
+                    out.println("alert('您的教师账号为" + user + ",可用其登录');");
+                    out.println("window.location.href='one_page_student';");
+                    out.println("</script>");
+                    out.flush();
                 } else {
                     out.print("<script>alert(\"此用户已经注册！\");location.href = \"register.jsp\";</script>");
                 }
@@ -55,5 +65,4 @@ public class check_register extends HttpServlet {
             }
         }
     }
-
 }

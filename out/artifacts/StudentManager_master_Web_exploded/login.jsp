@@ -34,7 +34,7 @@
     <h5 class="title">
         <a href="login.jsp" id="login">登录</a>
         <b>&nbsp;·&nbsp;</b>
-        <a href="register.jsp" id="register">注册</a>
+        <a href="register.jsp" id="register">教师注册</a>
     </h5>
     <form action="check_login" method="post" onsubmit="return check(this)">
         <div class="form-group">

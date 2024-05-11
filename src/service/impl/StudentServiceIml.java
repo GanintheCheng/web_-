@@ -58,6 +58,14 @@ public class StudentServiceIml implements StudentService {
     }
 
     public void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor, String password) throws Exception {
-        studentDao.updateStudentInfo(stuno, stuname, stusex, stumajor,password);
+        studentDao.updateStudentInfo(stuno, stuname, stusex, stumajor, password);
+    }
+
+    public void updateStudentSecurity(String stuno, String email, String password) throws Exception {
+        studentDao.updateStudentSecurity(stuno, email, password);
+    }
+
+    public void updateImg(String stuno, String img) throws Exception {
+        studentDao.updateImg(stuno, img);
     }
 }

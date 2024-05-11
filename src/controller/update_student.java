@@ -34,6 +34,7 @@ public class update_student extends HttpServlet {
         } catch (Exception e) {
             out.print(e);
         }
+        out.println("<script>alert(\"修改成功,请重新登录\");</script>");
         response.sendRedirect("one_page_student");
     }
 }

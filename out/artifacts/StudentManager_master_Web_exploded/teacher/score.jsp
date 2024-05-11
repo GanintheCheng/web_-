@@ -31,7 +31,7 @@
     <div id="header">
         <div id="logo">
             <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
-            <h1><%=teacher.getId()%>
+           <h1><%=teacher.getName()%>
             </h1>
         </div>
         <div id="menu">

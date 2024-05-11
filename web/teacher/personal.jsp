@@ -26,7 +26,7 @@
     <div id="header">
         <div id="logo">
             <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
-            <h1><%=teacher.getId()%>
+            <h1><%=teacher.getName()%>
             </h1>
         </div>
         <div id="menu">
@@ -52,6 +52,7 @@
             </form>
             <form method="post" action="../update_teacher" class="personalForm">
                 <input name="uid" value="<%=teacher.getId()%>" type="hidden">
+                用户名:<input type="text" value="<%=teacher.getAccount()%>" class="personalInput" readonly onmousedown ><br>
                 姓名: <input type="text" name="name" value="<%=teacher.getName()%>" class="personalInput"><br>
                 性别: <input type="text" name="sex" value="<%=teacher.getSex()%>" class="personalInput"><br>
                 邮箱: <input type="text" name="email" value="<%=teacher.getEmail()%>" class="personalInput"><br>

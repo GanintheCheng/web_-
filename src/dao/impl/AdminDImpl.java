@@ -27,6 +27,7 @@ public class AdminDImpl extends BaseDao {
             admin = new Admin();
             admin.setId(Integer.parseInt(rs.getString("id")));
             admin.setAccount(rs.getString("account"));
+            admin.setName(rs.getString("name"));
             admin.setPassword(rs.getString("password"));
         }
         return admin;
@@ -52,14 +53,15 @@ public class AdminDImpl extends BaseDao {
         return admin;
     }
 
-    public Admin updateAdmin(int id, String account, String password) throws Exception {
+    public Admin updateAdmin(int id, String account, String password, String name) throws Exception {
 
         initConnection();
-        String sql = "update admin set account=?, password=? where id=?";
+        String sql = "update admin set account=?, password=?, name=? where id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, account);
         ps.setString(2, password);
-        ps.setString(3, String.valueOf(id));
+        ps.setString(3, name);
+        ps.setString(4, String.valueOf(id));
         ps.executeUpdate();
         Admin admin = findWithId(id);
         closeConnection();

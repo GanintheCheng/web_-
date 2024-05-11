@@ -18,6 +18,6 @@ public class exit extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //清除cookie, 跳到起始页
         loginService.exitLogin(request, response);
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("login.jsp");
     }
 }

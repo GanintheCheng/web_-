@@ -46,4 +46,16 @@ public class TeacherServiceIml implements TeacherService {
     public void addTeacher(String id, String name, String password, String sex, String email) throws Exception {
         teacherDao.insertTeacher(id, name, password, sex, email);
     }
+
+    public Teacher updateTeacher(String uid, String name, String sex, String email, String password) throws Exception {
+        return teacherDao.updateTeacher(uid, name, sex, email, password);
+    }
+
+    public void updateTeacherPassword(String uid, String password) throws Exception {
+        teacherDao.updateTeacherPassword(uid, password);
+    }
+
+    public void updateImg(String uid, String img) throws Exception {
+        teacherDao.updateImg(uid, img);
+    }
 }

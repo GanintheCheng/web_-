@@ -10,13 +10,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.StudentService;
 import service.impl.StudentServiceIml;
+import util.myuntils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/add_student_admin")
 public class add_student_admin extends HttpServlet {
-    private final StudentServiceIml studentService=new StudentServiceIml();
+    private final StudentServiceIml studentService = new StudentServiceIml();
 
 
     @Override
@@ -27,7 +28,13 @@ public class add_student_admin extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        String id = request.getParameter("id");
+//        String id = request.getParameter("id");
+        String id = null;
+        try {
+            id = myuntils.getMaxStuId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         String name = request.getParameter("name");
         String sex = request.getParameter("sex");
         String major = request.getParameter("major");
@@ -38,6 +45,11 @@ public class add_student_admin extends HttpServlet {
         } catch (Exception e) {
             out.print(e);
         }
-        response.sendRedirect("one_page_student_admin");
+        out.println("<script>");
+        out.println("alert('添加的学生账号为" + id + ",可用其登录');");
+        out.println("window.location.href='one_page_student_admin';");
+        out.println("</script>");
+        out.flush();
+//        response.sendRedirect("one_page_student_admin");
     }
 }

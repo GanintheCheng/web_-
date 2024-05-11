@@ -28,8 +28,9 @@ public class update_admin extends HttpServlet {
         int uid = Integer.parseInt(request.getParameter("uid"));
         String account = request.getParameter("account");
         String password = request.getParameter("password");
+        String name = request.getParameter("name");
         try {
-            Admin admin = adminDImpl.updateAdmin(uid,account, password);
+            Admin admin = adminDImpl.updateAdmin(uid, account, password, name);
             session.setAttribute("admin", admin.getAccount());
             out.print("<script>alert(\"保存成功！\");location.href = \"admin/main.jsp\";</script>");
         } catch (Exception e) {

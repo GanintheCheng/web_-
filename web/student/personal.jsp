@@ -88,7 +88,7 @@
     <form id="password-form" method="post">
         <input type="hidden" name="id" value="<%=student.getId()%>">
         邮箱: &nbsp;&nbsp;<input type="email" name="email" value="<%=student.getEmail()%>"><br><br>
-        新密码:<input type="password" name="password"><br>
+        新密码:<input type="password" name="password" value="<%=student.getPassword()%>"><br>
         <hr>
         <input style="float: right" type="button" value="取消" onclick="closeDialog();">
         <input style="float: right; margin-right: 25px" type="submit" value="保存" onclick="submitForm();">
@@ -112,8 +112,8 @@
     }
 
     function submitForm() {
-        this.form.action = '../update_student_security';
-        this.form.submit();
+        document.getElementById('password-form').action = '../update_student_security';
+        document.getElementById('password-form').submit();
     }
 </script>
 
