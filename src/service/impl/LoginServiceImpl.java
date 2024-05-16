@@ -8,8 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Teacher;
 import model.Student;
+import service.LoginService;
 
-public class LoginServiceImpl {
+public class LoginServiceImpl implements LoginService {
     private final TeacherDImpl teacherDao;
     private final StudentDImpl studentDao;
 
@@ -18,6 +19,7 @@ public class LoginServiceImpl {
         this.studentDao = new StudentDImpl();
     }
 
+    @Override
     public Object checkLogin(String user, String password) throws Exception {
         Teacher teacher = teacherDao.checkAccount(user, password);
         if (teacher != null) {
@@ -27,6 +29,7 @@ public class LoginServiceImpl {
         return student;
     }
 
+    @Override
     public void exitLogin(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {

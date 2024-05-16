@@ -22,7 +22,6 @@ public class update_student extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         PrintWriter out = response.getWriter();
-        StudentDImpl studentDImpl = new StudentDImpl();
 
         String stuno = request.getParameter("stuno");
         String stuname = request.getParameter("stuname");
