@@ -76,6 +76,11 @@
                         <td style="font-size: 25px;font-weight: bold"><%=student.getMajor()%>
                         </td>
                     </tr>
+                     <tr>
+                        <td style="font-size: 25px;font-weight: bold">班级</td>
+                        <td style="font-size: 25px;font-weight: bold"><%=student.get_class().getName()%>
+                        </td>
+                    </tr>
                 </table>
             </form>
             <button class="password-btn" style="margin-top: 30px; height: 40px">修改安全信息</button>

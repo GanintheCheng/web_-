@@ -1,6 +1,8 @@
 package model;
 
 
+import java.util.List;
+
 public class Teacher {
 
     private String id;
@@ -10,6 +12,7 @@ public class Teacher {
     private String name;
     private String sex;
     private String img;
+    private List<Class> classList;
 
     public String getAccount() {
         return account;
@@ -27,44 +30,51 @@ public class Teacher {
         this.img = img;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getSex(){
+    public String getSex() {
         return sex;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setEmail(String email){
-        this.email= email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setSex(String sex){
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
+    public List<Class> getClassList() {
+        return classList;
+    }
+
+    public void setClassList(List<Class> classList) {
+        this.classList = classList;
+    }
 }

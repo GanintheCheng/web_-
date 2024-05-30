@@ -2,14 +2,19 @@ package dao.impl;
 
 import dao.BaseDao;
 import dao.TeacherD;
+import model.Class;
 import model.Student;
 import model.Teacher;
+import service.impl.ClassServiceIml;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TeacherDImpl extends BaseDao implements TeacherD {
+    public ClassServiceIml classServiceIml = new ClassServiceIml();
+
     @Override
     public Teacher checkAccount(String id, String password) throws Exception {
         initConnection();
@@ -93,7 +98,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
     }
 
     @Override
-    public Teacher getTeacher(ResultSet rs) throws SQLException {
+    public Teacher getTeacher(ResultSet rs) throws Exception {
         Teacher tea = null;
         if (rs.next()) {
             tea = new Teacher();
@@ -104,6 +109,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
             tea.setEmail(rs.getString("email"));
             tea.setSex(rs.getString("sex"));
             tea.setImg(rs.getString("img"));
+            tea.setClassList(getClassesWithId(tea.getId()));
         }
         return tea;
     }
@@ -204,5 +210,33 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
             closeConnection();
         }
         return maxIdString;
+    }
+
+    public List<Class> getClassesWithId(String id) throws Exception {
+        initConnection();
+        List<Class> listClassesWithIds = new ArrayList<>();
+        String query = "SELECT c.* FROM teacher_class tc " +
+                "JOIN teacher t ON t.id = tc.teacher_id " +
+                "JOIN class c ON c.id = tc.class_id " +
+                "WHERE tc.teacher_id = ?";
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Class cls = new Class();
+                    cls.setId(resultSet.getInt("id"));
+                    cls.setName(resultSet.getString("name"));
+                    listClassesWithIds.add(cls);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error while fetching classes with teacher ID: " + id, e);
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listClassesWithIds;
     }
 }

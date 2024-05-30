@@ -18,7 +18,7 @@ public interface TeacherD {
 
     public void updateTeacherPassword(String id, String password) throws Exception;
 
-    public Teacher getTeacher(ResultSet rs) throws SQLException ;
+    public Teacher getTeacher(ResultSet rs) throws Exception;
 
     public void updateImg(String id, String img) throws Exception;
 }

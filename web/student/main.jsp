@@ -3,6 +3,7 @@
 <%@ page import="dao.impl.ScoreDImpl" %>
 <%@ page import="model.Score" %>
 <%@ page import="dao.impl.StudentDImpl" %>
+<%@ page import="model.Class" %>
 <%--
    Created by IntelliJ IDEA.
   User: gzc
@@ -51,6 +52,7 @@
                     <th height="35">学号</th>
                     <th>姓名</th>
                     <th>专业</th>
+                    <th>班级</th>
                     <th>数据库</th>
                     <th>Android</th>
                     <th>JavaWeb</th>
@@ -63,6 +65,7 @@
                         Score stu = scoD.findWithId(student.getId());
                         String name = stuD.findWithId(student.getId()).getName();
                         String major = stuD.findWithId(student.getId()).getMajor();
+                        Class stuClass = stuD.findWithId(student.getId()).get_class();
                 %>
                 <tr>
                     <td height="35"><%=stu.getId()%>
@@ -71,6 +74,8 @@
                     </td>
                     <td><%=major%>
                     </td>
+                    <td><%=stuClass.getName()%>
+                    </td>
                     <td><%=stu.getDatabase()%>
                     </td>
                     <td><%=stu.getAndroid()%>
@@ -78,7 +83,7 @@
                     <td><%=stu.getJsp()%>
                     </td>
                     <td>
-                        <a href="pdf.jsp?id=<%=stu.getId()%>&name=<%=name%>&major=<%=major%>&database=<%=stu.getDatabase()%>&android=<%=stu.getAndroid()%>&jsp=<%=stu.getJsp()%>">PDF</a>
+                        <a href="pdf.jsp?id=<%=stu.getId()%>&name=<%=name%>&major=<%=major%>&stuClass=<%=stuClass.getName()%>&database=<%=stu.getDatabase()%>&android=<%=stu.getAndroid()%>&jsp=<%=stu.getJsp()%>">PDF</a>
                     </td>
                 </tr>
                 <%

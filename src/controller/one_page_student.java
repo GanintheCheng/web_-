@@ -34,13 +34,14 @@ public class one_page_student extends HttpServlet {
         if (key == null || key.equals("")) {
             int currentIndex, count, size = 10;
             String index = request.getParameter("index");
+            String teacherId = request.getParameter("teacherId");
             if (index == null)
                 index = "1";
             currentIndex = Integer.parseInt(index);
 
             try {
-                ArrayList<Student> stus = studentService.getOnePageStudents(currentIndex, size);
-                count = studentService.getStudentCount();
+                ArrayList<Student> stus = studentService.getOnePageStudents(currentIndex, size,teacherId);
+                count = studentService.getStudentCount(teacherId);
                 int sumIndex = count % size == 0 ? count / size : count / size + 1;
                 session.setAttribute("onePageStudent", stus);
                 session.setAttribute("sumIndex", sumIndex);

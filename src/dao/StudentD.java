@@ -21,9 +21,9 @@ public interface StudentD {
 
     int getStudentCount() throws Exception;
 
-    void getMoreStudent(ArrayList<Student> al, ResultSet rs) throws SQLException;
+    void getMoreStudent(ArrayList<Student> al, ResultSet rs) throws Exception;
 
-    Student getStudent(ResultSet rs) throws SQLException;
+    Student getStudent(ResultSet rs) throws Exception;
 
     void updateStudentInfo(String id, String name, String sex, String major) throws Exception;
 

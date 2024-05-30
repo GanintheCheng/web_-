@@ -39,6 +39,10 @@ public class StudentServiceIml implements StudentService {
         return studentDao.getOnePage(currentIndex, size);
     }
 
+    public ArrayList<Student> getOnePageStudents(int currentIndex, int size,String teacherId) throws Exception {
+        return studentDao.getOnePage(currentIndex, size,teacherId);
+    }
+
     @Override
     public Student findStudentWithId(String id) throws Exception {
         return studentDao.findWithId(id);
@@ -52,6 +56,10 @@ public class StudentServiceIml implements StudentService {
     @Override
     public int getStudentCount() throws Exception {
         return studentDao.getStudentCount();
+    }
+
+    public int getStudentCount(String teacherId) throws Exception {
+        return studentDao.getStudentCount(teacherId);
     }
 
     @Override

@@ -32,7 +32,7 @@
         <div id="menu">
             <ul>
                 <li class="current_page_item"><a href="personal.jsp">个人信息</a></li>
-                <li><a href="../one_page_student">学生管理</a></li>
+                <li><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a></li>
                 <li><a href="../one_page_score">成绩管理</a></li>
                 <li><a onclick="return confirm('确认退出?');" href="../exit">退出登录</a></li>
             </ul>

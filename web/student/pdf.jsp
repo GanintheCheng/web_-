@@ -30,6 +30,7 @@
     String id = request.getParameter("id");
     String name = request.getParameter("name");
     String major = request.getParameter("major");
+    String stuClass = request.getParameter("stuClass");
     String database = request.getParameter("database");
     String android = request.getParameter("android");
     String jsp = request.getParameter("jsp");
@@ -47,7 +48,7 @@
         doc.add(paragraph);
         doc.add(new Paragraph(" "));
 
-        PdfPTable table = new PdfPTable(6);
+        PdfPTable table = new PdfPTable(7);  // 改为7列
         table.setWidthPercentage(100);
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         table.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
@@ -69,31 +70,38 @@
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell);
 
+        cell = new PdfPCell(new Paragraph("班级", font));  // 新增班级列
+        cell.setRowspan(2);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+
         cell = new PdfPCell(new Paragraph("成绩", font));
         cell.setColspan(3);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell);
 
         table.addCell(new Paragraph("数据库", font));
-        table.addCell("Android");
-        table.addCell("JavaWeb");
-        table.addCell(id);
+        table.addCell(new Paragraph("Android", font));
+        table.addCell(new Paragraph("JavaWeb", font));
+
+        table.addCell(new Paragraph(id, font));
         table.addCell(new Paragraph(name, font));
         table.addCell(new Paragraph(major, font));
-        table.addCell(database);
-        table.addCell(android);
-        table.addCell(jsp);
+        table.addCell(new Paragraph(stuClass, font));  // 填充班级数据
+        table.addCell(new Paragraph(database, font));
+        table.addCell(new Paragraph(android, font));
+        table.addCell(new Paragraph(jsp, font));
+
         doc.add(table);
         doc.close();
 
         DataOutput output = new DataOutputStream(response.getOutputStream());
         byte[] bytes = buffer.toByteArray();
         response.setContentLength(bytes.length);
-        for( int i = 0; i < bytes.length; i++ ) {
-            output.writeByte( bytes[i] );
+        for (int i = 0; i < bytes.length; i++) {
+            output.writeByte(bytes[i]);
         }
-    }
-    catch (Exception e){
+    } catch (Exception e) {
         out.print(e);
     }
 %>

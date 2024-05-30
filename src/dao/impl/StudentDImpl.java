@@ -3,12 +3,21 @@ package dao.impl;
 import dao.BaseDao;
 import dao.ScoreD;
 import dao.StudentD;
+import model.Class;
 import model.Student;
+import model.Teacher;
+import service.impl.ClassServiceIml;
+import service.impl.TeacherServiceIml;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDImpl extends BaseDao implements StudentD {
+
+    ClassServiceIml classService = new ClassServiceIml();
+    TeacherServiceIml teacherService = new TeacherServiceIml();
 
     @Override
     public Student checkAccount(String user, String password) throws Exception {
@@ -98,10 +107,52 @@ public class StudentDImpl extends BaseDao implements StudentD {
         return al;
     }
 
+    public ArrayList<Student> getOnePage(int page, int size, String teacherId) throws Exception {
+        ArrayList<Student> al = new ArrayList<>();
+        initConnection();
+        List<Class> classList = teacherService.findTeacherWithId(teacherId).getClassList();
+        StringBuilder temp = new StringBuilder();
+        for (Class c : classList) {
+            temp.append(c.getId()).append(",");
+        }
+        // 去除最后一个逗号
+        if (!temp.isEmpty()) {
+            temp.setLength(temp.length() - 1);
+        }
+        String sql = "SELECT * FROM student WHERE class_id IN (" + temp.toString() + ") LIMIT ?, ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, (page - 1) * size);
+        ps.setInt(2, size);
+        ResultSet rs = ps.executeQuery();
+        getMoreStudent(al, rs);
+        closeConnection();
+        return al;
+    }
+
     @Override
     public int getStudentCount() throws Exception {
         initConnection();
         String sql = "select count(*) from student";
+        Statement stat = conn.createStatement();
+        ResultSet rs = stat.executeQuery(sql);
+        rs.next();
+        int count = rs.getInt(1);
+        closeConnection();
+        return count;
+    }
+
+    public int getStudentCount(String teacherId) throws Exception {
+        initConnection();
+        List<Class> classList = teacherService.findTeacherWithId(teacherId).getClassList();
+        StringBuilder temp = new StringBuilder();
+        for (Class c : classList) {
+            temp.append(c.getId()).append(",");
+        }
+        // 去除最后一个逗号
+        if (!temp.isEmpty()) {
+            temp.setLength(temp.length() - 1);
+        }
+        String sql = "select count(*) from student WHERE class_id IN (" + temp.toString() + ")";
         Statement stat = conn.createStatement();
         ResultSet rs = stat.executeQuery(sql);
         rs.next();
@@ -163,8 +214,9 @@ public class StudentDImpl extends BaseDao implements StudentD {
     }
 
     @Override
-    public Student getStudent(ResultSet rs) throws SQLException {
+    public Student getStudent(ResultSet rs) throws Exception {
         Student stu = null;
+        int classId = -1;
         if (rs.next()) {
             stu = new Student();
             stu.setId(rs.getString("id"));
@@ -176,12 +228,16 @@ public class StudentDImpl extends BaseDao implements StudentD {
             stu.setMajor(rs.getString("major"));
             stu.setEmail(rs.getString("email"));
             stu.setImg(rs.getString("img"));
+            classId = rs.getInt("class_id");
+        }
+        if (classId != -1) {
+            stu.setClass(classService.getClassById(classId));
         }
         return stu;
     }
 
     @Override
-    public void getMoreStudent(ArrayList<Student> al, ResultSet rs) throws SQLException {
+    public void getMoreStudent(ArrayList<Student> al, ResultSet rs) throws Exception {
         while (rs.next()) {
             Student stu = new Student();
             stu.setId(rs.getString("id"));
@@ -191,6 +247,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
             stu.setSchool_date(rs.getString("school_date"));
             stu.setMajor(rs.getString("major"));
             stu.setEmail(rs.getString("email"));
+            stu.setClass(classService.getClassById(rs.getInt("class_id")));
             al.add(stu);
         }
     }

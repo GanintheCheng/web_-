@@ -43,7 +43,7 @@ public class check_login extends HttpServlet {
                     userCookie.setMaxAge(999999999);
                     response.addCookie(userCookie);
                 }
-                response.sendRedirect("one_page_student");
+                response.sendRedirect("one_page_student?index=1&teacherId=" + ((Teacher) userInfo).getId());
             } else if (userInfo instanceof Student) {
                 session.setAttribute("info", userInfo);
                 if (remember != null) {

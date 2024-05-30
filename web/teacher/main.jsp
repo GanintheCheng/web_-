@@ -40,7 +40,7 @@
         <div id="menu">
             <ul>
                 <li><a href="personal.jsp">个人信息</a></li>
-                <li class="current_page_item"><a href="../one_page_student">学生管理</a></li>
+                <li class="current_page_item"><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a></li>
                 <li><a href="../one_page_score">成绩管理</a></li>
                 <li><a onclick="return confirm('确认退出?');" href="../exit">退出登录</a></li>
             </ul>
@@ -64,20 +64,28 @@
                     <th height="35">学号</th>
                     <th>姓名</th>
                     <th>性别</th>
+                    <th>班级</th>
                     <th>入学日期</th>
                     <th>专业</th>
                     <th>操作</th>
                 </tr>
                 <%
                     if (!stus.isEmpty() && stus.get(0) != null) {
+                        int counts = 0;
                         for (Student stu : stus) {
+//                            if (!teacher.getClassList().contains(stu.get_class())) {
+//                                continue;
+//                            } else counts++;
                 %>
                 <tr>
                     <form method="post" action="../update_student">
                         <td height="35"><%=stu.getId()%>
                         </td>
-                        <td><input value="<%=stu.getName()%>" name="stuname" class="table-input"></td>
-                        <td><input value="<%=stu.getSex()%>" name="stusex" class="table-input"></td>
+                        <td><input value="<%=stu.getName()%>" name="stuname" class="table-input" style="width: 50px">
+                        </td>
+                        <td><input value="<%=stu.getSex()%>" name="stusex" class="table-input" style="width: 50px"></td>
+                        <td><%=stu.get_class().getName()%>
+                        </td>
                         <td><%=stu.getSchool_date()%>
                         </td>
                         <td><input value="<%=stu.getMajor()%>" name="stumajor" class="table-input" style="width: 110px">
@@ -92,6 +100,7 @@
                 </tr>
                 <%
                     }
+//                    if(counts>0)sumIndex = counts / 10 + 1;
                 } else {
                 %>
                 <tr>
@@ -106,15 +115,15 @@
             if (sumIndex > 1) {
         %>
         <div id="index">
-            <a href="../one_page_student?index=1">首页</a>
+            <a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">首页</a>
             <%
                 for (int i = 1; i <= sumIndex; i++) {
             %>
-            <a href="../one_page_student?index=<%=i%>">第<%=i%>页</a>
+            <a href="../one_page_student?index=<%= i %>&teacherId=<%= teacher.getId() %>">第<%= i %>页</a>
             <%
                 }
             %>
-            <a href="../one_page_student?index=<%=sumIndex%>">尾页</a>
+            <a href="../one_page_student?index=<%= sumIndex %>&teacherId=<%= teacher.getId() %>">尾页</a>
         </div>
         <%
             }

@@ -8,7 +8,7 @@
 <html>
 <head>
     <title>找回密码</title>
-    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/bootstrap.css">
     <link href="resources/css/forget.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>

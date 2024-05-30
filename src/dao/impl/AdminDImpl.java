@@ -21,7 +21,8 @@ public class AdminDImpl extends BaseDao {
         return admin;
     }
 
-    public Admin getAdmin(ResultSet rs) throws SQLException {
+    public Admin getAdmin(ResultSet rs) throws Exception {
+        initConnection();
         Admin admin = null;
         if (rs.next()) {
             admin = new Admin();
