@@ -5,17 +5,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import service.impl.LoginServiceImpl;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/admin_check_login")
 public class admin_check_login extends HttpServlet {
-    private final AdminLoginServiceImpl adminLoginServiceImpl;
-
-    public admin_check_login() {
-        this.adminLoginServiceImpl = new AdminLoginServiceImpl();
-    }
+    private final AdminLoginServiceImpl adminLoginServiceImpl = new AdminLoginServiceImpl();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

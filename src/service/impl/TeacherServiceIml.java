@@ -1,16 +1,19 @@
 package service.impl;
 
+import dao.impl.ClassDImpl;
 import dao.impl.ScoreDImpl;
 import dao.impl.TeacherDImpl;
 import model.Teacher;
 import service.TeacherService;
+import util.factory;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class TeacherServiceIml implements TeacherService {
-    private final ScoreDImpl scoreDao = new ScoreDImpl();
-    private final TeacherDImpl teacherDao = new TeacherDImpl();
+    private final ScoreDImpl scoreDao = factory.getScoreDImpl();
+    private final TeacherDImpl teacherDao = factory.getTeacherDImpl();
+    private final ClassDImpl classDao = factory.getClassDImpl();
 
     @Override
     public ArrayList<Teacher> getOnePageTeachers(int currentIndex, int size) throws Exception {
@@ -40,6 +43,11 @@ public class TeacherServiceIml implements TeacherService {
 
     @Override
     public void updateTeacherInfo(String id, String name, String sex, String password) throws Exception {
+        teacherDao.updateTeacherInfo(id, name, sex, password);
+    }
+
+    public void updateTeacherInfo(String[] strings,String id, String name, String sex, String password) throws Exception {
+        classDao.changeClassWithTeacherId(strings,id);
         teacherDao.updateTeacherInfo(id, name, sex, password);
     }
 

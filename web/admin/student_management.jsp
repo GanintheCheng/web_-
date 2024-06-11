@@ -2,6 +2,9 @@
 <%@ page import="model.Admin" %>
 <%@ page import="dao.impl.AdminDImpl" %>
 <%@ page import="model.Student" %>
+<%@ page import="service.impl.ClassServiceIml" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.Class" %>
 <%-- Created by IntelliJ IDEA.
   User: gzc
   Date: 2024
@@ -66,6 +69,7 @@
                     <th>性别</th>
                     <th>入学日期</th>
                     <th>专业</th>
+                    <th>班级</th>
                     <th>密码</th>
                     <th>操作</th>
                 </tr>
@@ -83,6 +87,26 @@
                         <td><%=stu.getSchool_date()%>
                         </td>
                         <td><input value="<%=stu.getMajor()%>" name="stumajor" class="table-input" style="width: 100px">
+                        </td>
+                        <td>
+                            <select name="stuClass" class="table-select" style="min-width: 50px;">
+                                <%
+                                    List<Class> allClasses = null; // 获取所有班级列表
+                                    try {
+                                        allClasses = new ClassServiceIml().getAllClasses();
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    Class stuClass = stu.get_class(); // 获取教师所管理的班级列表
+                                    for (Class cls : allClasses) {
+                                        boolean isSelected = stuClass.equals(cls);
+                                %>
+                                <option value="<%= cls.getId() %>" <%= isSelected ? "selected" : "" %>><%= cls.getName() %>
+                                </option>
+                                <%
+                                    }
+                                %>
+                            </select>
                         </td>
                          <td><input value="<%=stu.getPassword()%>" name="stupassword" class="table-input" style="width: 100px">
                         </td>

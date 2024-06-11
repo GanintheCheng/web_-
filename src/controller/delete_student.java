@@ -9,13 +9,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.impl.StudentServiceIml;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/delete_student")
 public class delete_student extends HttpServlet {
-    public StudentServiceIml student=new StudentServiceIml();
+    public StudentServiceIml student= new StudentServiceIml();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,9 +28,10 @@ public class delete_student extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String id = request.getParameter("id");
+        String teacherId = request.getParameter("teacherId");
         try {
             student.deleteStudent(id);
-            response.sendRedirect("one_page_student");
+            response.sendRedirect("one_page_student?teacherId="+teacherId);
         } catch (Exception e) {
             out.print(e);
         }

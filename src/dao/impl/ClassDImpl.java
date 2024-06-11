@@ -3,6 +3,7 @@ package dao.impl;
 import dao.BaseDao;
 import model.Class;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,6 @@ public class ClassDImpl extends BaseDao {
         Class c = null;
         Statement stat = conn.createStatement();
         String sql = "SELECT * FROM class where id = '" + id + "'";
-        ;
         ResultSet rs = stat.executeQuery(sql);
         c = getClass(rs);
         closeConnection();
@@ -47,5 +47,49 @@ public class ClassDImpl extends BaseDao {
             c.setName(rs.getString("name"));
         }
         return c;
+    }
+
+    public List<Class> getAllClasses() throws Exception {
+        initConnection();
+        List<Class> classes = new ArrayList<>();
+        Statement stat = conn.createStatement();
+        String sql = "SELECT * FROM class";
+        ResultSet rs = stat.executeQuery(sql);
+        while (rs.next()) {
+            Class c = new Class();
+            c.setId(rs.getInt("id"));
+            c.setName(rs.getString("name"));
+            classes.add(c);
+        }
+        closeConnection();
+        return classes;
+    }
+
+     public void changeClassWithTeacherId(String[] classStrings, String teacherId) throws Exception {
+        initConnection();
+        PreparedStatement ps = null;
+        try {
+            // 删除老师对应的所有班级
+            String deleteSql = "DELETE FROM teacher_class WHERE teacher_id = ?";
+            ps = conn.prepareStatement(deleteSql);
+            ps.setString(1, teacherId);
+            ps.executeUpdate();
+
+            // 插入新的班级
+            String insertSql = "INSERT INTO teacher_class (teacher_id, class_id) VALUES (?, ?)";
+            ps = conn.prepareStatement(insertSql);
+            for (String classString : classStrings) {
+                ps.setString(1, teacherId);
+                ps.setString(2, classString);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL错误");
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            closeConnection();
+        }
     }
 }

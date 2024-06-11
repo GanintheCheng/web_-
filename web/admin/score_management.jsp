@@ -3,6 +3,7 @@
 <%@ page import="dao.impl.AdminDImpl" %>
 <%@ page import="model.Score" %>
 <%@ page import="dao.impl.StudentDImpl" %>
+<%@ page import="model.Student" %>
 <%-- Created by IntelliJ IDEA.
   User: gzc
   Date: 2024
@@ -61,6 +62,7 @@
                         <th height="35">学号</th>
                         <th>姓名</th>
                         <th>专业</th>
+                        <th>班级</th>
                         <th>数据库</th>
                         <th>Android</th>
                         <th>JavaWeb</th>
@@ -69,13 +71,16 @@
                         try {
                             StudentDImpl stuD = new StudentDImpl();
                             for (Score stu : stus) {
-                                String name = stuD.findWithId(stu.getId()).getName();
-                                String major = stuD.findWithId(stu.getId()).getMajor();
+                                Student student =stuD.findWithId(stu.getId());
+                                String name = student.getName();
+                                String major = student.getMajor();
+                                String className = student.get_class().getName();
                     %>
                     <tr>
                         <td height="35"><%=stu.getId()%></td>
                         <td><%=name%></td>
                         <td><%=major%></td>
+                        <td><%=className%></td>
                         <td><input value="<%=stu.getDatabase()%>" name="database" class="table-input"></td>
                         <td><input value="<%=stu.getAndroid()%>" name="android" class="table-input"></td>
                         <td><input value="<%=stu.getJsp()%>" name="jsp" class="table-input"></td>

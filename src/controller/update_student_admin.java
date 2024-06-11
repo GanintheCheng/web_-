@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.impl.StudentServiceIml;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,9 +27,10 @@ public class update_student_admin extends HttpServlet {
         String stusex = request.getParameter("stusex");
         String stumajor = request.getParameter("stumajor");
         String stupassword = request.getParameter("stupassword");
+        int stuClass = Integer.parseInt(request.getParameter("stuClass"));
 
         try {
-            studentService.updateStudentInfo(stuno, stuname, stusex, stumajor,stupassword);
+            studentService.updateStudentInfo(stuno, stuname, stusex, stumajor,stupassword,stuClass);
         } catch (Exception e) {
             out.print(e);
         }

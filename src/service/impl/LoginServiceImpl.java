@@ -9,15 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.Teacher;
 import model.Student;
 import service.LoginService;
+import util.factory;
 
 public class LoginServiceImpl implements LoginService {
-    private final TeacherDImpl teacherDao;
-    private final StudentDImpl studentDao;
-
-    public LoginServiceImpl() {
-        this.teacherDao = new TeacherDImpl();
-        this.studentDao = new StudentDImpl();
-    }
+    private final TeacherDImpl teacherDao = factory.getTeacherDImpl();
+    private final StudentDImpl studentDao = factory.getStudentDImpl();
 
     @Override
     public Object checkLogin(String user, String password) throws Exception {

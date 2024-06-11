@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.impl.StudentServiceIml;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,6 +28,7 @@ public class update_student extends HttpServlet {
         String stuname = request.getParameter("stuname");
         String stusex = request.getParameter("stusex");
         String stumajor = request.getParameter("stumajor");
+        String teacherId = request.getParameter("teacherId");
 
         try {
             studentService.updateStudentInfo(stuno, stuname, stusex, stumajor);
@@ -34,6 +36,6 @@ public class update_student extends HttpServlet {
             out.print(e);
         }
         out.println("<script>alert(\"修改成功,请重新登录\");</script>");
-        response.sendRedirect("one_page_student");
+        response.sendRedirect("one_page_student?teacherId="+teacherId);
     }
 }

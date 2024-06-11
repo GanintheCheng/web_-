@@ -77,4 +77,12 @@ public class Teacher {
     public void setClassList(List<Class> classList) {
         this.classList = classList;
     }
+
+    public String getClassListString() {
+        String classListString = "";
+        for (Class c : classList) {
+            classListString += c.getName() + "|";
+        }
+        return classListString.substring(0, classListString.length() - 1);
+    }
 }

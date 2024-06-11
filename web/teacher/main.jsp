@@ -40,8 +40,9 @@
         <div id="menu">
             <ul>
                 <li><a href="personal.jsp">个人信息</a></li>
-                <li class="current_page_item"><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a></li>
-                <li><a href="../one_page_score">成绩管理</a></li>
+                <li class="current_page_item"><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a>
+                </li>
+                <li><a href="../one_page_score?index=1&teacherId=<%= teacher.getId() %>">成绩管理</a></li>
                 <li><a onclick="return confirm('确认退出?');" href="../exit">退出登录</a></li>
             </ul>
         </div>
@@ -52,7 +53,7 @@
             <hr/>
             <button class="btn-add">添加学生</button>
             <div class="find">
-                <form action="../one_page_student" method="post">
+                <form action="../one_page_student?teacherId=<%= teacher.getId() %>" method="post">
                     <input id="find-text" type="text" name="key" placeholder="输入学号或姓名搜索">
                     <input class="find-btn" type="submit" value="搜索">
                 </form>
@@ -71,14 +72,13 @@
                 </tr>
                 <%
                     if (!stus.isEmpty() && stus.get(0) != null) {
-                        int counts = 0;
                         for (Student stu : stus) {
 //                            if (!teacher.getClassList().contains(stu.get_class())) {
 //                                continue;
 //                            } else counts++;
                 %>
                 <tr>
-                    <form method="post" action="../update_student">
+                    <form method="post" action="../update_student?teacherId=<%=teacher.getId()%>">
                         <td height="35"><%=stu.getId()%>
                         </td>
                         <td><input value="<%=stu.getName()%>" name="stuname" class="table-input" style="width: 50px">
@@ -88,13 +88,14 @@
                         </td>
                         <td><%=stu.getSchool_date()%>
                         </td>
-                        <td><input value="<%=stu.getMajor()%>" name="stumajor" class="table-input" style="width: 110px">
+                        <td><%=stu.getMajor()%>
                         </td>
                         <input value="<%=stu.getId()%>" name="stuno" type="hidden">
-                        <td><input type="submit" class="update-btn" value="修改">&nbsp;<a class="btn-delete"
-                                                                                          onclick="return confirm('确定要删除吗?');"
-                                                                                          href=<%="'../delete_student?id=" + stu.getId() + "'"%>>删除</a>&nbsp;&nbsp;<a
-                                href="../one_page_score?id=<%=stu.getId()%>">查看成绩</a>
+                        <td><input type="submit" class="update-btn" value="修改">&nbsp;
+                            <a class="btn-delete"
+                               onclick="return confirm('确定要删除吗?');"
+                               href=<%="'../delete_student?id=" + stu.getId() + "&teacherId=" + teacher.getId() + "'"%>>删除</a>&nbsp;&nbsp;<a
+                                    href="../one_page_score?id=<%=stu.getId()%>">查看成绩</a>
                         </td>
                     </form>
                 </tr>
@@ -134,17 +135,20 @@
 <%--添加学生信息对话框--%>
 <div id="add-dialog" title="添加学生信息">
     <form id="add-form" method="post">
-        <%--        学号:<input name="id" type="text"><br>--%>
         姓名:<input name="name" type="text"><br>
         性别:<input name="sex" type="text"><br>
         专业:<input name="major" type="text"><br>
+        班级:
+        <select name="class">
+            <option value="1">软件工程1班</option>
+            <option value="2">软件工程2班</option>
+            <option value="3">软件工程3班</option>
+        </select><br>
         入学日期:<input name="school_date" type="month" style="width: 190px">
         <hr>
-        <input style="float: right" type="submit" value="取消" onclick="function x() {
-          $('#add-dialog').dialog('close');
-        }">
+        <input style="float: right" type="button" value="取消" onclick="$('#add-dialog').dialog('close');">
         <input style="float: right; margin-right: 25px" type="submit" value="确定"
-               onclick="this.form.action='../add_student'">
+               onclick="this.form.action='../add_student?teacherId=<%= teacher.getId() %>'">
     </form>
 </div>
 

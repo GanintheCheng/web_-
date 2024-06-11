@@ -6,6 +6,7 @@ import model.Class;
 import model.Student;
 import model.Teacher;
 import service.impl.ClassServiceIml;
+import util.factory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import java.util.List;
 
 
 public class TeacherDImpl extends BaseDao implements TeacherD {
-    public ClassServiceIml classServiceIml = new ClassServiceIml();
 
     @Override
     public Teacher checkAccount(String id, String password) throws Exception {
@@ -138,7 +138,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         return al;
     }
 
-    public void getMoreTeacher(ArrayList<Teacher> al, ResultSet rs) throws SQLException {
+    public void getMoreTeacher(ArrayList<Teacher> al, ResultSet rs) throws Exception {
         while (rs.next()) {
             Teacher tea = new Teacher();
             tea.setId(rs.getString("id"));
@@ -147,6 +147,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
             tea.setSex(rs.getString("sex"));
             tea.setImg(rs.getString("img"));
             tea.setEmail(rs.getString("email"));
+            tea.setClassList(getClassesWithId(tea.getId()));
             al.add(tea);
         }
     }
@@ -184,6 +185,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         ps.executeUpdate();
         closeConnection();
     }
+
 
     public boolean deleteTeacher(String id) throws Exception {
         initConnection();

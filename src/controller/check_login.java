@@ -9,17 +9,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import service.impl.LoginServiceImpl;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/check_login")
 public class check_login extends HttpServlet {
-    private final LoginServiceImpl LoginServiceImpl;
-
-    public check_login() {
-        this.LoginServiceImpl = new LoginServiceImpl();
-    }
+    private final LoginServiceImpl LoginServiceImpl = new LoginServiceImpl();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

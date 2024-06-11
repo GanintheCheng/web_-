@@ -23,7 +23,7 @@ public interface StudentService {
 
     void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor) throws Exception;
 
-    void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor, String password) throws Exception;
+    void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor, String password,int classId) throws Exception;
 
     void updateStudentSecurity(String stuno, String email, String password) throws Exception;
 

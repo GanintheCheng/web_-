@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.impl.ScoreServiceImpl;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,10 +30,11 @@ public class update_score extends HttpServlet {
         String[] database = request.getParameterValues("database");
         String[] android = request.getParameterValues("android");
         String[] jsp = request.getParameterValues("jsp");
+        String teacherId = request.getParameter("teacherId");
 
         try {
             scoreUpdateService.updateScores(id, database, android, jsp);
-            response.sendRedirect("one_page_score");
+            response.sendRedirect("one_page_score?teacherId=" + teacherId);
         } catch (Exception e) {
             out.print(e);
         }

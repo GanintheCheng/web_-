@@ -2,6 +2,9 @@
 <%@ page import="model.Admin" %>
 <%@ page import="dao.impl.AdminDImpl" %>
 <%@ page import="model.Teacher" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.Class" %>
+<%@ page import="service.impl.ClassServiceIml" %>
 <%-- Created by IntelliJ IDEA.
   User: gzc
   Date: 2024
@@ -20,7 +23,7 @@
 <body>
 <%
     String adminId = (String) session.getAttribute("admin");
-    Admin admin = new Admin();
+    Admin admin;
     try {
         admin = new AdminDImpl().findWithAccount(adminId);
     } catch (Exception e) {
@@ -65,26 +68,53 @@
                     <th>姓名</th>
                     <th>性别</th>
                     <th>密码</th>
+                    <th>班级</th>
                     <th>操作</th>
                 </tr>
                 <%
-                    if (!teachers.isEmpty()&&teachers.get(0) != null) {
+                    if (!teachers.isEmpty() && teachers.get(0) != null) {
                         for (Teacher teacher : teachers) {
                 %>
                 <tr>
                     <form method="post" action="../update_teacher_admin">
-                        <td height="35"><%=teacher.getId()%>
+                        <td height="35"><%= teacher.getId() %>
                         </td>
-                        <td><input value="<%=teacher.getName()%>" name="teacherName" class="table-input"
-                                   style="min-width: 80px"></td>
-                        <td><input value="<%=teacher.getSex()%>" name="teacherSex" class="table-input"></td>
-                        <td><input value="<%=teacher.getPassword()%>" name="teacherPassword" class="table-input"
-                                   style="min-width: 100px"></td>
-                        <input value="<%=teacher.getId()%>" name="teacherId" type="hidden">
-                        <td><input type="submit" class="update-btn" value="修改">&nbsp;
-                            <a class="btn-delete"
-                               onclick="return confirm('确定要删除吗?');"
-                               href=<%="'../delete_teacher_admin?id=" + teacher.getId() + "'"%>>删除</a>
+                        <td>
+                            <input value="<%= teacher.getName() %>" name="teacherName" class="table-input"
+                                   style="min-width: 80px">
+                        </td>
+                        <td>
+                            <input value="<%= teacher.getSex() %>" name="teacherSex" class="table-input">
+                        </td>
+                        <td>
+                            <input value="<%= teacher.getPassword() %>" name="teacherPassword" class="table-input"
+                                   style="min-width: 100px">
+                        </td>
+                        <td>
+                            <select name="teacherClasses" class="table-select" multiple style="min-width: 150px;">
+                                <%
+                                    List<Class> allClasses = null; // 获取所有班级列表
+                                    try {
+                                        allClasses = new ClassServiceIml().getAllClasses();
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    List<Class> teacherClasses = teacher.getClassList(); // 获取教师所管理的班级列表
+                                    for (Class cls : allClasses) {
+                                        boolean isSelected = teacherClasses.contains(cls);
+                                %>
+                                <option value="<%= cls.getId() %>" <%= isSelected ? "selected" : "" %>><%= cls.getName() %>
+                                </option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                        </td>
+                        <input value="<%= teacher.getId() %>" name="teacherId" type="hidden">
+                        <td>
+                            <input type="submit" class="update-btn" value="修改">&nbsp;
+                            <a class="btn-delete" onclick="return confirm('确定要删除吗?');"
+                               href="<%="../delete_teacher_admin?id=" + teacher.getId()%>">删除</a>
                         </td>
                     </form>
                 </tr>
@@ -93,13 +123,14 @@
                 } else {
                 %>
                 <tr>
-                    <td colspan="4">未找到匹配的教师信息。</td>
+                    <td colspan="6">未找到匹配的教师信息。</td>
                 </tr>
                 <%
                     }
                 %>
             </table>
         </div>
+
         <%
             if (sumIndex > 1) {
         %>
@@ -121,7 +152,7 @@
 </div>
 <div id="add-dialog" title="添加教师信息">
     <form id="add-form" method="post">
-<%--        编号:<input name="teacherId" type="text"><br>--%>
+        <%--        编号:<input name="teacherId" type="text"><br>--%>
         姓名:<input name="teacherName" type="text"><br>
         密码:<input name="teacherPassword" type="text"><br>
         性别:<input name="teacherSex" type="text"><br>

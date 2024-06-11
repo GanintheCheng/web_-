@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.impl.TeacherServiceIml;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,13 +24,14 @@ public class update_teacher_admin extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
+        String[] teacherClasses = request.getParameterValues("teacherClasses");
         String teacherId = request.getParameter("teacherId");
         String teacherName = request.getParameter("teacherName");
         String teacherSex = request.getParameter("teacherSex");
         String teacherPassword = request.getParameter("teacherPassword");
 
         try {
-            teacherService.updateTeacherInfo(teacherId, teacherName, teacherSex, teacherPassword);
+            teacherService.updateTeacherInfo(teacherClasses,teacherId, teacherName, teacherSex, teacherPassword);
         } catch (Exception e) {
             out.print(e);
         }

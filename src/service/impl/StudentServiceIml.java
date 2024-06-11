@@ -4,18 +4,15 @@ import dao.impl.ScoreDImpl;
 import dao.impl.StudentDImpl;
 import model.Student;
 import service.StudentService;
+import util.factory;
 
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 
 public class StudentServiceIml implements StudentService {
-    private final StudentDImpl studentDao;
-    private final ScoreDImpl scoreDao;
+    private final StudentDImpl studentDao = factory.getStudentDImpl();
+    private final ScoreDImpl scoreDao = factory.getScoreDImpl();
 
-    public StudentServiceIml() {
-        this.studentDao = new StudentDImpl();
-        this.scoreDao = new ScoreDImpl();
-    }
 
     @Override
     public ArrayList<Student> findWithPartialId(String partialId) throws Exception {
@@ -25,6 +22,11 @@ public class StudentServiceIml implements StudentService {
     @Override
     public void addStudent(String id, String name, String sex, String major, String school_date) throws Exception {
         studentDao.insertStudent(id, name, sex, school_date, major);
+        scoreDao.insertScore(id);
+    }
+
+    public void addStudent(String id, String name, String sex, String major, String school_date, int stuClass) throws Exception {
+        studentDao.insertStudent(id, name, sex, school_date, major, stuClass);
         scoreDao.insertScore(id);
     }
 
@@ -39,8 +41,8 @@ public class StudentServiceIml implements StudentService {
         return studentDao.getOnePage(currentIndex, size);
     }
 
-    public ArrayList<Student> getOnePageStudents(int currentIndex, int size,String teacherId) throws Exception {
-        return studentDao.getOnePage(currentIndex, size,teacherId);
+    public ArrayList<Student> getOnePageStudents(int currentIndex, int size, String teacherId) throws Exception {
+        return studentDao.getOnePage(currentIndex, size, teacherId);
     }
 
     @Override
@@ -51,6 +53,10 @@ public class StudentServiceIml implements StudentService {
     @Override
     public ArrayList<Student> findStudentsWithName(String name) throws Exception {
         return studentDao.findWithName(name);
+    }
+
+    public ArrayList<Student> findStudentsWithTeacherId(String teacherId) throws Exception {
+        return studentDao.getStudentListWithTeacherId(teacherId);
     }
 
     @Override
@@ -74,8 +80,8 @@ public class StudentServiceIml implements StudentService {
     }
 
     @Override
-    public void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor, String password) throws Exception {
-        studentDao.updateStudentInfo(stuno, stuname, stusex, stumajor, password);
+    public void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor, String password,int ClassId) throws Exception {
+        studentDao.updateStudentInfo(stuno, stuname, stusex, stumajor, password,ClassId);
     }
 
     @Override
@@ -87,4 +93,5 @@ public class StudentServiceIml implements StudentService {
     public void updateImg(String stuno, String img) throws Exception {
         studentDao.updateImg(stuno, img);
     }
+
 }

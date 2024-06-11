@@ -33,7 +33,7 @@
             <ul>
                 <li class="current_page_item"><a href="personal.jsp">个人信息</a></li>
                 <li><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a></li>
-                <li><a href="../one_page_score">成绩管理</a></li>
+                <li><a href="../one_page_score?index=1&teacherId=<%= teacher.getId() %>">成绩管理</a></li>
                 <li><a onclick="return confirm('确认退出?');" href="../exit">退出登录</a></li>
             </ul>
         </div>
@@ -54,6 +54,7 @@
                 <input name="uid" value="<%=teacher.getId()%>" type="hidden">
                 用户名:<input type="text" value="<%=teacher.getAccount()%>" class="personalInput" readonly onmousedown ><br>
                 姓名: <input type="text" name="name" value="<%=teacher.getName()%>" class="personalInput"><br>
+                管理班级: <input type="text" name="name" value="<%=teacher.getClassListString()%>" class="personalInput" readonly onmousedown><br>
                 性别: <input type="text" name="sex" value="<%=teacher.getSex()%>" class="personalInput"><br>
                 邮箱: <input type="text" name="email" value="<%=teacher.getEmail()%>" class="personalInput"><br>
                 密码: <input type="text" name="password" value="<%=teacher.getPassword()%>" class="personalInput"><br>

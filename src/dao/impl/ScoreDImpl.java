@@ -2,12 +2,20 @@ package dao.impl;
 
 import dao.BaseDao;
 import dao.ScoreD;
+import model.Class;
 import model.Score;
+import model.Student;
+import service.impl.StudentServiceIml;
+import util.factory;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ScoreDImpl extends BaseDao implements ScoreD {
+//    StudentServiceIml studentService = factory.getStudentServiceIml();
+    StudentDImpl studentD = new StudentDImpl();
+
     @Override
     public boolean insertScore(String id) throws Exception {
         initConnection();
@@ -59,6 +67,30 @@ public class ScoreDImpl extends BaseDao implements ScoreD {
         ArrayList<Score> al = new ArrayList<>();
         initConnection();
         String sql = "SELECT * FROM score limit ?, ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, (page - 1) * size);
+        ps.setInt(2, size);
+        ResultSet rs = ps.executeQuery();
+        getMoreScore(al, rs);
+        closeConnection();
+        return al;
+    }
+
+    public ArrayList<Score> getOnePage(int page, int size, String teacherId) throws Exception {
+        ArrayList<Score> al = new ArrayList<>();
+        ArrayList<Student> students = new ArrayList<>();
+        students = studentD.getStudentListWithTeacherId(teacherId);
+        HashSet<String> Strings = new HashSet<>();
+        for (Student student : students) {
+            Strings.add(student.getId());
+        }
+        StringBuilder temp = new StringBuilder();
+        for (String id : Strings) {
+            temp.append(id+",");
+        }
+        String res=temp.substring(0,temp.length()-1);
+        initConnection();
+        String sql = "SELECT * FROM score  where id in ("+res+") limit ?, ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, (page - 1) * size);
         ps.setInt(2, size);

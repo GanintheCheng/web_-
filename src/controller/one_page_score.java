@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import service.ScoreService;
 import service.impl.ScoreServiceImpl;
+import service.impl.StudentServiceIml;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 @WebServlet("/one_page_score")
 public class one_page_score extends HttpServlet {
     private final ScoreServiceImpl scoreService = new ScoreServiceImpl();
+    private final StudentServiceIml studentService = new StudentServiceIml();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,13 +38,14 @@ public class one_page_score extends HttpServlet {
 
             int currentIndex, count, size = 10;
             String index = request.getParameter("index");
+            String teacherId = request.getParameter("teacherId");
             if (index == null)
                 index = "1";
             currentIndex = Integer.parseInt(index);
 
             try {
-                count = scoreService.getScoreCount();
-                ArrayList<Score> stus = scoreService.getOnePageScores(currentIndex, size);
+                count = studentService.getStudentCount(teacherId);
+                ArrayList<Score> stus = scoreService.getOnePageScores(currentIndex, size,teacherId);
                 int sumIndex = count % size == 0 ? count / size : count / size + 1;
                 session.setAttribute("onePageScore", stus);
                 session.setAttribute("sumScoreIndex", sumIndex);

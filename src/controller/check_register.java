@@ -2,6 +2,7 @@ package controller;
 
 import dao.impl.TeacherDImpl;
 import model.Teacher;
+import util.factory;
 import util.myuntils;
 
 import jakarta.servlet.ServletException;
@@ -18,11 +19,7 @@ import java.sql.SQLException;
 
 @WebServlet("/check_register")
 public class check_register extends HttpServlet {
-    private final RegisterServiceImpl registerService;
-
-    public check_register() {
-        this.registerService = new RegisterServiceImpl();
-    }
+    private final RegisterServiceImpl registerService = new RegisterServiceImpl();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,6 +36,7 @@ public class check_register extends HttpServlet {
         }
         String password = request.getParameter("password");
         String code = request.getParameter("code");
+        new factory();
 
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();

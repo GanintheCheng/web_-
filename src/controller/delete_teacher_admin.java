@@ -10,11 +10,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.impl.StudentServiceIml;
 import service.impl.TeacherServiceIml;
+import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/delete_teacher_admin")
+@WebServlet("/f")
 public class delete_teacher_admin extends HttpServlet {
     public TeacherServiceIml teacher = new TeacherServiceIml();
 

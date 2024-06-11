@@ -31,14 +31,14 @@
     <div id="header">
         <div id="logo">
             <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
-           <h1><%=teacher.getName()%>
+            <h1><%=teacher.getName()%>
             </h1>
         </div>
         <div id="menu">
             <ul>
                 <li><a href="personal.jsp">个人信息</a></li>
-               <li><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a></li>
-                <li class="current_page_item"><a href="../one_page_score">成绩管理</a></li>
+                <li><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a></li>
+                <li class="current_page_item"><a href="../one_page_score?index=1&teacherId=<%= teacher.getId() %>">成绩管理</a></li>
                 <li><a onclick="return confirm('确认退出?');" href="../exit">退出登录</a></li>
             </ul>
         </div>
@@ -48,7 +48,7 @@
             <h2>学生成绩管理</h2>
             <hr/>
         </div>
-        <form method="post" action="../update_score" style="height: 525px; margin-top: 20px">
+        <form method="post" action="../update_score?teacherId=<%= teacher.getId()%>" style="height: 525px; margin-top: 20px">
             <input type="button" class="btn-add" onclick="location.href='score_excel.jsp';" value="导出EXCEL">
             <input type="submit" class="btn-add" style="float: right;margin-bottom: 30px" value="修改">
             <div class="table" style="margin-top: 20px; height: 525px">
@@ -57,6 +57,7 @@
                         <th height="35">学号</th>
                         <th>姓名</th>
                         <th>专业</th>
+                        <th>班级</th>
                         <th>数据库</th>
                         <th>Android</th>
                         <th>JavaWeb</th>
@@ -67,11 +68,18 @@
                             for (Score stu : stus) {
                                 String name = stuD.findWithId(stu.getId()).getName();
                                 String major = stuD.findWithId(stu.getId()).getMajor();
+                                String stuClass = stuD.findWithId(stu.getId()).get_class().getName();
                     %>
                     <tr>
-                        <td height="35"><%=stu.getId()%></td>
-                        <td><%=name%></td>
-                        <td><%=major%></td>
+                        <td height="35"><%=stu.getId()%>
+                        </td>
+                        <td><%=name%>
+                        </td>
+                        <td><%=major%>
+                        </td>
+                        <td>
+                            <%=stuClass%>
+                        </td>
                         <td><input value="<%=stu.getDatabase()%>" name="database" class="table-input"></td>
                         <td><input value="<%=stu.getAndroid()%>" name="android" class="table-input"></td>
                         <td><input value="<%=stu.getJsp()%>" name="jsp" class="table-input"></td>
@@ -89,19 +97,19 @@
         </form>
 
         <%
-            if (sumIndex > 1){
+            if (sumIndex > 1) {
         %>
-                <div id="index">
-                    <a href="../one_page_score?index=1">首页</a>
-                    <%
-                        for (int i = 1; i <= sumIndex; i++) {
-                    %>
-                    <a href="../one_page_score?index=<%=i%>">第<%=i%>页</a>
-                    <%
-                        }
-                    %>
-                    <a href="../one_page_score?index=<%=sumIndex%>">尾页</a>
-                </div>
+        <div id="index">
+            <a href="../one_page_score?index=1&teacherId=<%= teacher.getId() %>">首页</a>
+            <%
+                for (int i = 1; i <= sumIndex; i++) {
+            %>
+            <a href="../one_page_score?index=<%=i%>&teacherId=<%= teacher.getId() %>">第<%=i%>页</a>
+            <%
+                }
+            %>
+            <a href="../one_page_score?index=<%=sumIndex%>&teacherId=<%= teacher.getId() %>">尾页</a>
+        </div>
         <%
             }
         %>
