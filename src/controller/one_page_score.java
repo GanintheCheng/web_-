@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Student;
 import service.ScoreService;
 import service.impl.ScoreServiceImpl;
 import service.impl.StudentServiceIml;
@@ -45,10 +46,19 @@ public class one_page_score extends HttpServlet {
 
             try {
                 count = studentService.getStudentCount(teacherId);
-                ArrayList<Score> stus = scoreService.getOnePageScores(currentIndex, size,teacherId);
+                ArrayList<Score> stus = new ArrayList<>();
+                if (count > 0) stus = scoreService.getOnePageScores(currentIndex, size, teacherId);
+                ArrayList<Student> students = new ArrayList<>();
+                for (Score score : stus) {
+                    Student student = studentService.findStudentWithId(score.getId());
+                    if (student != null) {
+                        students.add(student);
+                    }
+                }
                 int sumIndex = count % size == 0 ? count / size : count / size + 1;
                 session.setAttribute("onePageScore", stus);
                 session.setAttribute("sumScoreIndex", sumIndex);
+                session.setAttribute("onePageStudent", students);
                 response.sendRedirect("teacher/score.jsp");
             } catch (Exception e) {
                 out.print(e);

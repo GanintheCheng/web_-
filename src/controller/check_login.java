@@ -9,14 +9,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import service.impl.LoginServiceImpl;
-import util.factory;
+import service.impl.ScoreServiceImpl;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/check_login")
 public class check_login extends HttpServlet {
-    private final LoginServiceImpl LoginServiceImpl = new LoginServiceImpl();
+    private final LoginServiceImpl loginService = new LoginServiceImpl();
+    private final ScoreServiceImpl scoreService = new ScoreServiceImpl();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,7 +24,6 @@ public class check_login extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
 
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
         String user = request.getParameter("user");
@@ -32,29 +31,37 @@ public class check_login extends HttpServlet {
         String remember = request.getParameter("remember");
 
         try {
-            Object userInfo = LoginServiceImpl.checkLogin(user, password);
+            Object userInfo = loginService.checkLogin(user, password);
             if (userInfo instanceof Teacher) {
-                session.setAttribute("info", userInfo);
                 if (remember != null) {
-                    Cookie userCookie = new Cookie("name", user);
+                    Cookie userCookie = new Cookie("name", ((Teacher) userInfo).getId());
                     userCookie.setMaxAge(999999999);
                     response.addCookie(userCookie);
                 }
-                response.sendRedirect("one_page_student?index=1&teacherId=" + ((Teacher) userInfo).getId());
+                handleSuccessfulLogin(request, response, session, userInfo, remember, "one_page_student?index=1&teacherId=" + ((Teacher) userInfo).getId());
             } else if (userInfo instanceof Student) {
-                session.setAttribute("info", userInfo);
+                session.setAttribute("score", scoreService.findScoreWithId(((Student) userInfo).getId()));
                 if (remember != null) {
-                    Cookie userCookie = new Cookie("name", user);
+                    Cookie userCookie = new Cookie("name", ((Student) userInfo).getId());
                     userCookie.setMaxAge(999999999);
                     response.addCookie(userCookie);
                 }
-                response.sendRedirect("student/main.jsp");
+                handleSuccessfulLogin(request, response, session, userInfo, remember, "student/main.jsp");
             } else {
-                out.print("<script>alert(\"用户名或密码错误！\")</script>");
+                handleFailedLogin(request, response, "用户名或密码错误！");
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            handleFailedLogin(request, response, "系统错误，请稍后再试。");
         }
     }
-}
 
+    private void handleSuccessfulLogin(HttpServletRequest request, HttpServletResponse response, HttpSession session, Object userInfo, String remember, String redirectUrl) throws IOException {
+        session.setAttribute("info", userInfo);
+        response.sendRedirect(redirectUrl);
+    }
+
+    private void handleFailedLogin(HttpServletRequest request, HttpServletResponse response, String errorMessage) throws ServletException, IOException {
+        request.setAttribute("errorMessage", errorMessage);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
+}

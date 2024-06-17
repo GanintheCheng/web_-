@@ -53,7 +53,7 @@ public class ClassDImpl extends BaseDao {
         initConnection();
         List<Class> classes = new ArrayList<>();
         Statement stat = conn.createStatement();
-        String sql = "SELECT * FROM class";
+        String sql = "SELECT * FROM class where id!=0";
         ResultSet rs = stat.executeQuery(sql);
         while (rs.next()) {
             Class c = new Class();
@@ -91,5 +91,13 @@ public class ClassDImpl extends BaseDao {
             }
             closeConnection();
         }
+    }
+
+    public void deleteTeacherClass(String teacherId) throws Exception {
+        initConnection();
+        Statement stat = conn.createStatement();
+        String sql = "DELETE FROM teacher_class WHERE teacher_id = '" + teacherId + "'";
+        stat.executeUpdate(sql);
+        closeConnection();
     }
 }

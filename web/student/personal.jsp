@@ -1,11 +1,10 @@
-<%@ page import="model.Student" %>
-<%@ page import="dao.impl.StudentDImpl" %>
 <%--
   Created by IntelliJ IDEA.
   User: gzc
   Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -17,20 +16,12 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
-<%
-    Student student = (Student) session.getAttribute("info");
-    try {
-        student = new StudentDImpl().findWithId(student.getId());
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-%>
+<c:set var="student" value="${sessionScope.info}" />
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="<%="http://localhost:8080/"+student.getImg()%>"/>
-            <h1><%=student.getName()%>
-            </h1>
+            <img src="http://localhost:8080/${student.img}"/>
+            <h1>${student.name}</h1>
         </div>
         <div id="menu">
             <ul>
@@ -46,10 +37,9 @@
             <hr/>
         </div>
         <div class="info">
-            <%--             <img src="../userImg/<%=student.getId()%>.jpeg" class="personalImg"><br>--%>
-            <img src="<%="http://localhost:8080/"+student.getImg()%>" class="personalImg"><br>
+            <img src="http://localhost:8080/${student.img}" class="personalImg"><br>
             <form action="../upload_studentImg" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<%=student.getId()%>">
+                <input type="hidden" name="id" value="${student.id}">
                 <input type="file" name="img">
                 <input type="submit" value="上传头像">
             </form>
@@ -58,28 +48,23 @@
                 <table width="400" frame="box" align="center" style="margin-top: 30px;">
                     <tr>
                         <td style="font-size: 25px;font-weight: bold">学号</td>
-                        <td style="font-size: 25px;font-weight: bold"><%=student.getId()%>
-                        </td>
+                        <td style="font-size: 25px;font-weight: bold">${student.id}</td>
                     </tr>
                     <tr>
                         <td style="font-size: 25px;font-weight: bold">姓名</td>
-                        <td style="font-size: 25px;font-weight: bold"><%=student.getName()%>
-                        </td>
+                        <td style="font-size: 25px;font-weight: bold">${student.name}</td>
                     </tr>
                     <tr>
                         <td style="font-size: 25px;font-weight: bold">性别</td>
-                        <td style="font-size: 25px;font-weight: bold"><%=student.getSex()%>
-                        </td>
+                        <td style="font-size: 25px;font-weight: bold">${student.sex}</td>
                     </tr>
                     <tr>
                         <td style="font-size: 25px;font-weight: bold">专业</td>
-                        <td style="font-size: 25px;font-weight: bold"><%=student.getMajor()%>
-                        </td>
+                        <td style="font-size: 25px;font-weight: bold">${student.major}</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td style="font-size: 25px;font-weight: bold">班级</td>
-                        <td style="font-size: 25px;font-weight: bold"><%=student.get_class().getName()%>
-                        </td>
+                        <td style="font-size: 25px;font-weight: bold">${student.studentClass.name}</td>
                     </tr>
                 </table>
             </form>
@@ -91,9 +76,9 @@
 <%--修改密码对话框--%>
 <div id="password-dialog" title="修改安全信息">
     <form id="password-form" method="post">
-        <input type="hidden" name="id" value="<%=student.getId()%>">
-        邮箱: &nbsp;&nbsp;<input type="email" name="email" value="<%=student.getEmail()%>"><br><br>
-        新密码:<input type="password" name="password" value="<%=student.getPassword()%>"><br>
+        <input type="hidden" name="id" value="${student.id}">
+        邮箱: &nbsp;&nbsp;<input type="email" name="email" value="${student.email}"><br><br>
+        新密码:<input type="password" name="password" value="${student.password}"><br>
         <hr>
         <input style="float: right" type="button" value="取消" onclick="closeDialog();">
         <input style="float: right; margin-right: 25px" type="submit" value="保存" onclick="submitForm();">
@@ -121,12 +106,5 @@
         document.getElementById('password-form').submit();
     }
 </script>
-
-<style>
-    .ui-dialog-titlebar-close {
-        display: none
-    }
-</style>
 </body>
 </html>
-

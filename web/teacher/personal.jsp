@@ -1,11 +1,4 @@
-<%@ page import="model.Teacher" %>
-<%@ page import="dao.impl.TeacherDImpl" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: gzc
-  Date: 2024
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -14,26 +7,19 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
-<%
-    Teacher teacher = (Teacher) session.getAttribute("info");
-    try {
-        teacher = new TeacherDImpl().findWithId(teacher.getId());
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-%>
+<c:set var="teacher" value="${sessionScope.info}" />
+
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
-            <h1><%=teacher.getName()%>
-            </h1>
+            <img src="http://localhost:8080/${teacher.img}"/>
+            <h1>${teacher.name}</h1>
         </div>
         <div id="menu">
             <ul>
                 <li class="current_page_item"><a href="personal.jsp">个人信息</a></li>
-                <li><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a></li>
-                <li><a href="../one_page_score?index=1&teacherId=<%= teacher.getId() %>">成绩管理</a></li>
+                <li><a href="../one_page_student?index=1&amp;teacherId=${teacher.id}">学生管理</a></li>
+                <li><a href="../one_page_score?index=1&amp;teacherId=${teacher.id}">成绩管理</a></li>
                 <li><a onclick="return confirm('确认退出?');" href="../exit">退出登录</a></li>
             </ul>
         </div>
@@ -44,20 +30,20 @@
             <hr/>
         </div>
         <div class="info">
-            <img src="<%="http://localhost:8080/"+teacher.getImg()%>" class="personalImg"><br>
+            <img src="http://localhost:8080/${teacher.img}" class="personalImg"><br>
             <form action="../upload_teacherImg" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<%=teacher.getId()%>">
+                <input type="hidden" name="id" value="${teacher.id}">
                 <input type="file" name="img">
                 <input type="submit" value="上传头像">
             </form>
             <form method="post" action="../update_teacher" class="personalForm">
-                <input name="uid" value="<%=teacher.getId()%>" type="hidden">
-                用户名:<input type="text" value="<%=teacher.getAccount()%>" class="personalInput" readonly onmousedown ><br>
-                姓名: <input type="text" name="name" value="<%=teacher.getName()%>" class="personalInput"><br>
-                管理班级: <input type="text" name="name" value="<%=teacher.getClassListString()%>" class="personalInput" readonly onmousedown><br>
-                性别: <input type="text" name="sex" value="<%=teacher.getSex()%>" class="personalInput"><br>
-                邮箱: <input type="text" name="email" value="<%=teacher.getEmail()%>" class="personalInput"><br>
-                密码: <input type="text" name="password" value="<%=teacher.getPassword()%>" class="personalInput"><br>
+                <input name="uid" value="${teacher.id}" type="hidden">
+                用户名:<input type="text" value="${teacher.account}" class="personalInput" readonly onmousedown ><br>
+                姓名: <input type="text" name="name" value="${teacher.name}" class="personalInput"><br>
+                管理班级: <input type="text" name="name" value="${teacher.classListString}" class="personalInput" readonly onmousedown><br>
+                性别: <input type="text" name="sex" value="${teacher.sex}" class="personalInput"><br>
+                邮箱: <input type="text" name="email" value="${teacher.email}" class="personalInput"><br>
+                密码: <input type="text" name="password" value="${teacher.password}" class="personalInput"><br>
                 <input type="submit" value="保存" style="width: 100px; height: 30px; margin-top: 20px">
             </form>
         </div>
@@ -65,4 +51,3 @@
 </div>
 </body>
 </html>
-

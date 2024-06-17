@@ -1,10 +1,5 @@
-<%--
-   Created by IntelliJ IDEA.
-  User: gzc
-  Date: 2024
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +22,6 @@
         }
         return true;
     }
-
 </script>
 <h1 style="margin: 50px 80px; color: darkgray; font-family: cursive;">欢迎来到教务系统</h1>
 <div class="main">
@@ -36,6 +30,9 @@
         <b>&nbsp;·&nbsp;</b>
         <a href="register.jsp" id="register">教师注册</a>
     </h5>
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-danger">${errorMessage}</div>
+    </c:if>
     <form action="check_login" method="post" onsubmit="return check(this)">
         <div class="form-group">
             <input type="text" name="user" class="form-control user" placeholder="请输入用户名">

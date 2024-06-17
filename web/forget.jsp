@@ -5,8 +5,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>找回密码</title>
     <link rel="stylesheet" href="resources/css/bootstrap.css">
     <link href="resources/css/forget.css" type="text/css" rel="stylesheet"/>
@@ -14,7 +17,7 @@
 <body>
 <h1 style="margin: 50px 80px; color: darkgray; font-family: cursive;">欢迎来到教务系统</h1>
 <div class="main">
-    <form role="form" action="sendCode.jsp" method="post">
+    <form role="form" action="send_code" method="post">
         <div class="form-group" align="center">
             <input class="form-control" type="text" name="user" placeholder="输入用户名"><br>
             <input type="submit" class="btn btn-success" value="下一步">

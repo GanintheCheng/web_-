@@ -1,6 +1,8 @@
 package controller;
 
 import dao.impl.StudentDImpl;
+import jakarta.servlet.http.HttpSession;
+import model.Student;
 import org.apache.commons.fileupload2.core.DiskFileItem;
 import org.apache.commons.fileupload2.core.DiskFileItemFactory;
 import org.apache.commons.fileupload2.jakarta.JakartaServletDiskFileUpload;
@@ -61,6 +63,9 @@ public class upload_studentImg extends HttpServlet {
                 }
             }
             studentServiceIml.updateImg(id, "stu/userImg" + "/" + fileName);
+            HttpSession session = request.getSession();
+            Student userInfo = studentServiceIml.findStudentWithId(id);
+            session.setAttribute("info", userInfo);
             response.sendRedirect(request.getContextPath() + "/student/personal.jsp");
         } catch (Exception e) {
             out.print(e);

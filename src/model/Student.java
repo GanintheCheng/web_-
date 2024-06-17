@@ -11,7 +11,7 @@ public class Student {
     private String major;
     private String email;
     private String img; // 新添加的字段，用于存储图片数据
-    private Class Class;
+    private Class studentClass;
 
     public String getAccount() {
         return account;
@@ -85,11 +85,11 @@ public class Student {
         this.img = img;
     }
 
-    public void setClass(model.Class aClass) {
-        Class = aClass;
+    public Class getStudentClass() {
+        return studentClass;
     }
 
-    public model.Class get_class() {
-        return Class;
+    public void setStudentClass(Class studentClass) {
+        this.studentClass = studentClass;
     }
 }

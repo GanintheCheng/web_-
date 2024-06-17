@@ -40,9 +40,10 @@ public class add_student_admin extends HttpServlet {
         String sex = request.getParameter("sex");
         String major = request.getParameter("major");
         String school_date = request.getParameter("school_date");
+        int classId = Integer.parseInt(request.getParameter("stuClass"));
 
         try {
-            studentService.addStudent(id, name, sex, major, school_date);
+            studentService.addStudent(id, name, sex, major, school_date,classId);
         } catch (Exception e) {
             out.print(e);
         }

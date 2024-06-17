@@ -1,10 +1,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Admin" %>
-<%@ page import="dao.impl.AdminDImpl" %>
-<%@ page import="model.Student" %>
 <%@ page import="service.impl.ClassServiceIml" %>
 <%@ page import="java.util.List" %>
-<%@ page import="model.Class" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%-- Created by IntelliJ IDEA.
   User: gzc
   Date: 2024
@@ -21,23 +20,15 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
-<%
-    String adminId = (String) session.getAttribute("admin");
-    Admin admin = new Admin();
-    try {
-        admin = new AdminDImpl().findWithAccount(adminId);
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-    ArrayList<Student> stus = (ArrayList<Student>) session.getAttribute("onePageStudent");
-    int sumIndex = (int) session.getAttribute("sumIndex");
-%>
+<c:if test="${empty admin}">
+    <c:redirect url="login.jsp"/>
+</c:if>
+
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src=http://localhost:8080/stu/userImg/默认.jpeg>
-            <h1><%=admin.getName()%>
-            </h1>
+            <img src="http://localhost:8080/stu/userImg/默认.jpeg">
+            <h1>${admin.name}</h1> <!-- 使用EL表达式访问属性 -->
         </div>
         <div id="menu">
             <ul>
@@ -73,98 +64,68 @@
                     <th>密码</th>
                     <th>操作</th>
                 </tr>
-                <%
-                    if (!stus.isEmpty()&&stus.get(0) != null) {
-                        for (Student stu : stus) {
-                %>
-                <tr>
-                    <form method="post" action="../update_student_admin">
-                        <td height="35"><%=stu.getId()%>
-                        </td>
-                        <td><input value="<%=stu.getName()%>" name="stuname" class="table-input"
-                                   style="width: 80px"></td>
-                        <td><input value="<%=stu.getSex()%>" name="stusex" class="table-input" style="width: 40px"></td>
-                        <td><%=stu.getSchool_date()%>
-                        </td>
-                        <td><input value="<%=stu.getMajor()%>" name="stumajor" class="table-input" style="width: 100px">
-                        </td>
-                        <td>
-                            <select name="stuClass" class="table-select" style="min-width: 50px;">
-                                <%
-                                    List<Class> allClasses = null; // 获取所有班级列表
-                                    try {
-                                        allClasses = new ClassServiceIml().getAllClasses();
-                                    } catch (Exception e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    Class stuClass = stu.get_class(); // 获取教师所管理的班级列表
-                                    for (Class cls : allClasses) {
-                                        boolean isSelected = stuClass.equals(cls);
-                                %>
-                                <option value="<%= cls.getId() %>" <%= isSelected ? "selected" : "" %>><%= cls.getName() %>
-                                </option>
-                                <%
-                                    }
-                                %>
-                            </select>
-                        </td>
-                         <td><input value="<%=stu.getPassword()%>" name="stupassword" class="table-input" style="width: 100px">
-                        </td>
-                        <input value="<%=stu.getId()%>" name="stuno" type="hidden">
-                        <td><input type="submit" class="update-btn" value="修改">&nbsp;
-                            <a class="btn-delete"
-                               onclick="return confirm('确定要删除吗?');"
-                               href=<%="'../delete_student_admin?id=" + stu.getId() + "'"%>>删除</a>&nbsp;&nbsp;<a
-                                    href="../one_page_score_admin?id=<%=stu.getId()%>">查看成绩</a>
-                        </td>
-                    </form>
-                </tr>
-                <%
-                    }
-                } else {
-                %>
-                <tr>
-                    <td colspan="6">未找到匹配的学生信息。</td>
-                </tr>
-                <%
-                    }
-                %>
+                <c:choose>
+                    <c:when test="${not empty stus }">
+                        <c:forEach var="stu" items="${stus}">
+                            <tr>
+                                <form method="post" action="../update_student_admin">
+                                    <td height="35">${stu.id}</td>
+                                    <td><input value="${stu.name}" name="stuname" class="table-input" style="width: 80px"></td>
+                                    <td><input value="${stu.sex}" name="stusex" class="table-input" style="width: 40px"></td>
+                                    <td>${stu.school_date}</td>
+                                    <td><input value="${stu.major}" name="stumajor" class="table-input" style="width: 100px"></td>
+                                    <td>
+                                        <select name="stuClass" class="table-select" style="min-width: 50px;">
+                                            <c:forEach var="cls" items="${allClasses}">
+                                                <option value="${cls.id}" ${stu.studentClass.id eq cls.id ? 'selected' : ''}>${cls.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                    <td><input value="${stu.password}" name="stupassword" class="table-input" style="width: 100px"></td>
+                                    <input value="${stu.id}" name="stuno" type="hidden">
+                                    <td><input type="submit" class="update-btn" value="修改">&nbsp;
+                                        <a class="btn-delete" onclick="return confirm('确定要删除吗?');" href="../delete_student_admin?id=${stu.id}">删除</a>&nbsp;&nbsp;<a href="../one_page_score_admin?id=${stu.id}">查看成绩</a>
+                                    </td>
+                                </form>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <tr>
+                            <td colspan="6">未找到匹配的学生信息。</td>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
             </table>
         </div>
-        <%
-            if (sumIndex > 1) {
-        %>
-        <div id="index">
-            <a href="../one_page_student_admin?index=1">首页</a>
-            <%
-                for (int i = 1; i <= sumIndex; i++) {
-            %>
-            <a href="../one_page_student_admin?index=<%=i%>">第<%=i%>页</a>
-            <%
-                }
-            %>
-            <a href="../one_page_student_admin?index=<%=sumIndex%>">尾页</a>
-        </div>
-        <%
-            }
-        %>
+        <c:if test="${sumIndex > 1}">
+            <div id="index">
+                <a href="../one_page_student_admin?index=1">首页</a>
+                <c:forEach begin="1" end="${sumIndex}" varStatus="loop">
+                    <a href="../one_page_student_admin?index=${loop.index}">第${loop.index}页</a>
+                </c:forEach>
+                <a href="../one_page_student_admin?index=${sumIndex}">尾页</a>
+            </div>
+        </c:if>
     </div>
 </div>
 <div id="add-dialog" title="添加学生信息">
-    <form id="add-form" method="post">
+    <form id="add-form" method="post" action="../add_student_admin">
         姓名:<input name="name" type="text"><br>
         性别:<input name="sex" type="text"><br>
         专业:<input name="major" type="text"><br>
-        入学日期:<input name="school_date" type="month" style="width: 190px">
+        入学日期:<input name="school_date" type="month" style="width: 190px"><br>
+        班级:
+        <select name="stuClass">
+            <c:forEach var="cls" items="${allClasses}">
+                <option value="${cls.id}">${cls.name}</option>
+            </c:forEach>
+        </select><br>
         <hr>
-        <input style="float: right" type="submit" value="取消" onclick="function x() {
-          $('#add-dialog').dialog('close');
-        }">
-        <input style="float: right; margin-right: 25px" type="submit" value="确定"
-               onclick="this.form.action='../add_student_admin'">
+        <input style="float: right" type="button" value="取消" onclick="$('#add-dialog').dialog('close');">
+        <input style="float: right; margin-right: 25px" type="submit" value="确定">
     </form>
 </div>
-</body>
 <script>
     $('#add-dialog').dialog({
         width: 310,
@@ -177,4 +138,5 @@
         $('#add-dialog').dialog('open');
     });
 </script>
+</body>
 </html>

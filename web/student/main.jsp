@@ -1,15 +1,10 @@
-<%@ page import="dao.impl.StudentDImpl" %>
-<%@ page import="model.Student" %>
-<%@ page import="dao.impl.ScoreDImpl" %>
-<%@ page import="model.Score" %>
-<%@ page import="dao.impl.StudentDImpl" %>
-<%@ page import="model.Class" %>
 <%--
    Created by IntelliJ IDEA.
   User: gzc
   Date: 2024
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -18,20 +13,12 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
-<%
-    Student student = (Student) session.getAttribute("info");
-    try {
-        student = new StudentDImpl().findWithId(student.getId());
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-%>
+<c:set var="student" value="${sessionScope.info}" />
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="<%="http://localhost:8080/"+student.getImg()%>"/>
-            <h1><%=student.getName()%>
-            </h1>
+            <img src="http://localhost:8080/${student.img}"/>
+            <h1>${student.name}</h1>
         </div>
         <div id="menu">
             <ul>
@@ -58,43 +45,24 @@
                     <th>JavaWeb</th>
                     <th>操作</th>
                 </tr>
-                <%
-                    try {
-                        ScoreDImpl scoD = new ScoreDImpl();
-                        StudentDImpl stuD = new StudentDImpl();
-                        Score stu = scoD.findWithId(student.getId());
-                        String name = stuD.findWithId(student.getId()).getName();
-                        String major = stuD.findWithId(student.getId()).getMajor();
-                        Class stuClass = stuD.findWithId(student.getId()).get_class();
-                %>
                 <tr>
-                    <td height="35"><%=stu.getId()%>
-                    </td>
-                    <td><%=name%>
-                    </td>
-                    <td><%=major%>
-                    </td>
-                    <td><%=stuClass.getName()%>
-                    </td>
-                    <td><%=stu.getDatabase()%>
-                    </td>
-                    <td><%=stu.getAndroid()%>
-                    </td>
-                    <td><%=stu.getJsp()%>
-                    </td>
+                    <td height="35">${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.major}</td>
+                    <td>${student.studentClass.name}</td>
+                    <td>${score.database}</td>
+                    <td>${score.android}</td>
+                    <td>${score.jsp}</td>
                     <td>
-                        <a href="pdf.jsp?id=<%=stu.getId()%>&name=<%=name%>&major=<%=major%>&stuClass=<%=stuClass.getName()%>&database=<%=stu.getDatabase()%>&android=<%=stu.getAndroid()%>&jsp=<%=stu.getJsp()%>">PDF</a>
+                        <a href="../export_excel?studentId=${student.id}">PDF</a>
                     </td>
                 </tr>
-                <%
-                    } catch (Exception e) {
-                        out.print(e);
-                    }
-                %>
             </table>
         </div>
     </div>
 </div>
+<script src="../resources/js/jquery-3.2.1.min.js"></script>
+<script src="../resources/js/popper.min.js"></script>
+<script src="../resources/js/bootstrap.min.js"></script>
 </body>
 </html>
-

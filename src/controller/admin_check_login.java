@@ -1,11 +1,11 @@
 package controller;
 
+import dao.impl.AdminDImpl;
+import model.Admin;
 import service.impl.AdminLoginServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import service.impl.LoginServiceImpl;
-import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,13 +29,18 @@ public class admin_check_login extends HttpServlet {
         try {
             boolean isAdminValid = adminLoginServiceImpl.checkAdminLogin(account, password);
             if (isAdminValid) {
-                session.setAttribute("admin", account);
-                response.sendRedirect("admin/main.jsp");
+                Admin admin = new AdminDImpl().findWithAccount(account);
+                session.setAttribute("admin", admin); // 存储完整的Admin对象到session
+                request.setAttribute("admin", admin); // 将Admin对象放入request
+                response.sendRedirect(request.getContextPath() + "/admin/main.jsp");
             } else {
                 out.print("<script>alert(\"管理员用户名或密码错误！\")</script>");
+                response.sendRedirect("login.jsp"); // 重定向回登录页面
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            out.print("<script>alert(\"系统错误，请稍后再试！\")</script>");
+            response.sendRedirect("login.jsp");
         }
     }
 }

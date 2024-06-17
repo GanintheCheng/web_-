@@ -14,6 +14,7 @@ import java.util.List;
 
 
 public class TeacherDImpl extends BaseDao implements TeacherD {
+    ClassDImpl classD = new ClassDImpl();
 
     @Override
     public Teacher checkAccount(String id, String password) throws Exception {
@@ -49,6 +50,8 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         ps.executeUpdate();
         Teacher teacher = findWithId(id);
         closeConnection();
+        String[] strings = new String[]{"0"};
+        classD.changeClassWithTeacherId(strings,id);
         return teacher;
     }
 
@@ -188,6 +191,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
 
 
     public boolean deleteTeacher(String id) throws Exception {
+        classD.deleteTeacherClass(id);
         initConnection();
         Statement stat = conn.createStatement();
         String sql = "delete from teacher where id='" + id + "'";

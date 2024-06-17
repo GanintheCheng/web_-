@@ -15,7 +15,7 @@ import util.factory;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/f")
+@WebServlet("/delete_teacher_admin")
 public class delete_teacher_admin extends HttpServlet {
     public TeacherServiceIml teacher = new TeacherServiceIml();
 

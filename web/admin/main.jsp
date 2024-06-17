@@ -1,11 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Admin" %>
 <%@ page import="dao.impl.AdminDImpl" %>
-<%-- Created by IntelliJ IDEA.
-  User: gzc
-  Date: 2024
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -17,21 +12,12 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
-<%
-    String adminAccount = (String) session.getAttribute("admin");
-    Admin admin = new Admin();
-    try {
-        admin = new AdminDImpl().findWithAccount(adminAccount);
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-%>
+
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src=http://localhost:8080/stu/userImg/默认.jpeg>
-            <h1><%=admin.getName()%>
-            </h1>
+            <img src="http://localhost:8080/stu/userImg/默认.jpeg">
+            <h1>${not empty admin ? admin.name : ''}</h1>
         </div>
         <div id="menu">
             <ul>
@@ -47,15 +33,15 @@
         <h2>欢迎管理员</h2>
         <hr/>
         <div class="info">
-            <img src=http://localhost:8080/stu/userImg/默认.jpeg class="personalImg"><br>
+            <img src="http://localhost:8080/stu/userImg/默认.jpeg" class="personalImg"><br>
             <form action="../upload_teacherImg" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<%=admin.getAccount()%>">
+                <input type="hidden" name="id" value="${not empty admin ? admin.account : ''}">
             </form>
             <form method="post" action="../update_admin" class="personalForm">
-                <input name="uid" value="<%=admin.getId()%>" type="hidden">
-                账号: <input type="text" name="account" value="<%=admin.getAccount()%>" class="personalInput"><br>
-                姓名: <input type="text" name="name" value="<%=admin.getName()%>" class="personalInput"><br>
-                密码: <input type="text" name="password" value="<%=admin.getPassword()%>" class="personalInput"><br>
+                <input name="uid" value="${not empty admin ? admin.id : ''}" type="hidden">
+                账号: <input type="text" name="account" value="${not empty admin ? admin.account : ''}" class="personalInput"><br>
+                姓名: <input type="text" name="name" value="${not empty admin ? admin.name : ''}" class="personalInput"><br>
+                密码: <input type="text" name="password" value="${not empty admin ? admin.password : ''}" class="personalInput"><br>
                 <input type="submit" value="保存" style="width: 100px; height: 30px; margin-top: 20px">
             </form>
         </div>

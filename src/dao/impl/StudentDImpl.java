@@ -250,7 +250,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
             classId = rs.getInt("class_id");
         }
         if (classId != -1) {
-            stu.setClass(classD.getClassById(classId));
+            stu.setStudentClass(classD.getClassById(classId));
         }
         return stu;
     }
@@ -266,7 +266,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
             stu.setSchool_date(rs.getString("school_date"));
             stu.setMajor(rs.getString("major"));
             stu.setEmail(rs.getString("email"));
-            stu.setClass(classD.getClassById(rs.getInt("class_id")));
+            stu.setStudentClass(classD.getClassById(rs.getInt("class_id")));
             al.add(stu);
         }
     }
@@ -307,7 +307,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
             Student student = new Student();
             student.setId(rs.getString("id"));
             student.setName(rs.getString("name"));
-            student.setClass(classD.getClassById(rs.getInt("class_id")));
+            student.setStudentClass(classD.getClassById(rs.getInt("class_id")));
             students.add(student);
         }
         closeConnection();

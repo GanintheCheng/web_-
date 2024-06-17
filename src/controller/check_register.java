@@ -36,7 +36,6 @@ public class check_register extends HttpServlet {
         }
         String password = request.getParameter("password");
         String code = request.getParameter("code");
-        new factory();
 
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();

@@ -32,7 +32,7 @@ public class update_admin extends HttpServlet {
         String name = request.getParameter("name");
         try {
             Admin admin = adminService.updateAdmin(uid, account, password, name);
-            session.setAttribute("admin", admin.getAccount());
+            session.setAttribute("admin", admin);
             out.print("<script>alert(\"保存成功！\");location.href = \"admin/main.jsp\";</script>");
         } catch (Exception e) {
             out.print(e);

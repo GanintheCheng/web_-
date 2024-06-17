@@ -1,14 +1,4 @@
-<%@ page import="model.Teacher" %>
-<%@ page import="model.Score" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="dao.impl.StudentDImpl" %>
-<%@ page import="dao.impl.TeacherDImpl" %>
-<%--
-   Created by IntelliJ IDEA.
-  User: gzc
-  Date: 2024
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -17,28 +7,22 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
-<%
-    Teacher teacher = (Teacher) session.getAttribute("info");
-    try {
-        teacher = new TeacherDImpl().findWithId(teacher.getId());
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-    ArrayList<Score> stus = (ArrayList<Score>) session.getAttribute("onePageScore");
-    int sumIndex = (int) session.getAttribute("sumScoreIndex");
-%>
+<c:set var="teacher" value="${sessionScope.info}"/>
+<c:set var="scores" value="${sessionScope.onePageScore}"/>
+<c:set var="sumIndex" value="${sessionScope.sumScoreIndex}"/>
+
 <div id="page" class="container">
     <div id="header">
         <div id="logo">
-            <img src="<%="http://localhost:8080/"+teacher.getImg()%>"/>
-            <h1><%=teacher.getName()%>
-            </h1>
+            <img src="http://localhost:8080/${teacher.img}"/>
+            <h1>${teacher.name}</h1>
         </div>
         <div id="menu">
             <ul>
                 <li><a href="personal.jsp">个人信息</a></li>
-                <li><a href="../one_page_student?index=1&teacherId=<%= teacher.getId() %>">学生管理</a></li>
-                <li class="current_page_item"><a href="../one_page_score?index=1&teacherId=<%= teacher.getId() %>">成绩管理</a></li>
+                <li><a href="../one_page_student?index=1&amp;teacherId=${teacher.id}">学生管理</a></li>
+                <li class="current_page_item"><a
+                        href="../one_page_score?index=1&amp;teacherId=${teacher.id}">成绩管理</a></li>
                 <li><a onclick="return confirm('确认退出?');" href="../exit">退出登录</a></li>
             </ul>
         </div>
@@ -48,73 +32,55 @@
             <h2>学生成绩管理</h2>
             <hr/>
         </div>
-        <form method="post" action="../update_score?teacherId=<%= teacher.getId()%>" style="height: 525px; margin-top: 20px">
-            <input type="button" class="btn-add" onclick="location.href='score_excel.jsp';" value="导出EXCEL">
-            <input type="submit" class="btn-add" style="float: right;margin-bottom: 30px" value="修改">
-            <div class="table" style="margin-top: 20px; height: 525px">
-                <table id="table" width="800" frame="box" align="center">
-                    <tr>
-                        <th height="35">学号</th>
-                        <th>姓名</th>
-                        <th>专业</th>
-                        <th>班级</th>
-                        <th>数据库</th>
-                        <th>Android</th>
-                        <th>JavaWeb</th>
-                    </tr>
-                    <%
-                        try {
-                            StudentDImpl stuD = new StudentDImpl();
-                            for (Score stu : stus) {
-                                String name = stuD.findWithId(stu.getId()).getName();
-                                String major = stuD.findWithId(stu.getId()).getMajor();
-                                String stuClass = stuD.findWithId(stu.getId()).get_class().getName();
-                    %>
-                    <tr>
-                        <td height="35"><%=stu.getId()%>
-                        </td>
-                        <td><%=name%>
-                        </td>
-                        <td><%=major%>
-                        </td>
-                        <td>
-                            <%=stuClass%>
-                        </td>
-                        <td><input value="<%=stu.getDatabase()%>" name="database" class="table-input"></td>
-                        <td><input value="<%=stu.getAndroid()%>" name="android" class="table-input"></td>
-                        <td><input value="<%=stu.getJsp()%>" name="jsp" class="table-input"></td>
-                        <input value="<%=stu.getId()%>" name="id" type="hidden">
-                    </tr>
-                    <%
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    %>
-                </table>
+        <c:if test="${not empty scores}">
+            <form method="post" action="../update_score?teacherId=${teacher.id}"
+                  style="height: 525px; margin-top: 20px">
+                <input type="button" class="btn-add" onclick="location.href='../export_excel?teacherId=${teacher.id}';"
+                       value="导出EXCEL">
+                <input type="submit" class="btn-add" style="float: right;margin-bottom: 30px" value="修改">
+                <div class="table" style="margin-top: 20px; height: 525px">
+                    <table id="table" width="800" frame="box" align="center">
+                        <tr>
+                            <th height="35">学号</th>
+                            <th>姓名</th>
+                            <th>专业</th>
+                            <th>班级</th>
+                            <th>数据库</th>
+                            <th>Android</th>
+                            <th>JavaWeb</th>
+                        </tr>
+                        <c:forEach var="score" items="${scores}">
+                            <c:set var="student" value="${onePageStudent[scores.indexOf(score)]}"/>
+                            <tr>
+                                <td height="35">${score.id}</td>
+                                <td>${student.name}</td>
+                                <td>${student.major}</td>
+                                <td>${student.studentClass.name}</td>
+                                <td><input value="${score.database}" name="database" class="table-input"></td>
+                                <td><input value="${score.android}" name="android" class="table-input"></td>
+                                <td><input value="${score.jsp}" name="jsp" class="table-input"></td>
+                                <input value="${score.id}" name="id" type="hidden">
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+            </form>
+        </c:if>
 
+        <c:if test="${sumIndex > 1}">
+            <div id="index">
+                <a href="../one_page_score?index=1&amp;teacherId=${teacher.id}">首页</a>
+                <c:forEach begin="1" end="${sumIndex}" var="i">
+                    <a href="../one_page_score?index=${i}&amp;teacherId=${teacher.id}">第${i}页</a>
+                </c:forEach>
+                <a href="../one_page_score?index=${sumIndex}&amp;teacherId=${teacher.id}">尾页</a>
             </div>
-        </form>
+        </c:if>
 
-        <%
-            if (sumIndex > 1) {
-        %>
-        <div id="index">
-            <a href="../one_page_score?index=1&teacherId=<%= teacher.getId() %>">首页</a>
-            <%
-                for (int i = 1; i <= sumIndex; i++) {
-            %>
-            <a href="../one_page_score?index=<%=i%>&teacherId=<%= teacher.getId() %>">第<%=i%>页</a>
-            <%
-                }
-            %>
-            <a href="../one_page_score?index=<%=sumIndex%>&teacherId=<%= teacher.getId() %>">尾页</a>
-        </div>
-        <%
-            }
-        %>
+        <c:if test="${empty scores}">
+            <div style="text-align: center; margin-top: 50px; font-size: 18px; color: gray;">暂无学生</div>
+        </c:if>
     </div>
 </div>
 </body>
 </html>
-
