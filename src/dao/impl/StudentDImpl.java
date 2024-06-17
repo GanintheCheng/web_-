@@ -179,16 +179,14 @@ public class StudentDImpl extends BaseDao implements StudentD {
         return count;
     }
 
-    @Override
-    public void updateStudentInfo(String id, String name, String sex, String major) throws Exception {
 
+    public void updateStudentInfo(String id, String name, String sex) throws Exception {
         initConnection();
-        String sql = "update student set name=?, sex=?, major=? where id=?";
+        String sql = "update student set name=?, sex=? where id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, name);
         ps.setString(2, sex);
-        ps.setString(3, major);
-        ps.setString(4, id);
+        ps.setString(3, id);
         ps.executeUpdate();
         closeConnection();
     }

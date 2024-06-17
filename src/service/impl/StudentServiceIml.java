@@ -75,8 +75,8 @@ public class StudentServiceIml implements StudentService {
     }
 
     @Override
-    public void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor) throws Exception {
-        studentDao.updateStudentInfo(stuno, stuname, stusex, stumajor);
+    public void updateStudentInfo(String stuno, String stuname, String stusex) throws Exception {
+        studentDao.updateStudentInfo(stuno, stuname, stusex);
     }
 
     @Override

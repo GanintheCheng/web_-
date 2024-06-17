@@ -8,6 +8,28 @@
     <script src="../resources/js/jquery-ui-1.10.4.custom.min.js"></script>
     <title>main</title>
     <link href="../resources/css/default.css" rel="stylesheet"/>
+    <script>
+        $(document).ready(function () {
+            var successMessage = '${sessionScope.successMessage}';
+            if (successMessage) {
+                alert(successMessage);
+                <% session.removeAttribute("successMessage"); %>
+            }
+        });
+
+        function validateForm(form) {
+            var name = form.elements['stuname'].value.trim();
+            var sex = form.elements['stusex'].value.trim();
+
+            if (name === '' || (sex !== '男' && sex !== '女')) {
+                alert('姓名不能为空且性别必须为"男"或"女"！');
+                return false;
+            } else {
+                alert('修改成功！');
+                return true;
+            }
+        }
+    </script>
 </head>
 <body>
 <c:set var="teacher" value="${sessionScope.info}"/>
@@ -63,7 +85,7 @@
                     </c:forEach>
                     <c:if test="${isInTeacherClass}">
                         <tr>
-                            <form method="post" action="../update_student?teacherId=${teacher.id}">
+                            <form method="post" action="../update_student?teacherId=${teacher.id}" onsubmit="return validateForm(this);">
                                 <td height="35">${stu.id}</td>
                                 <td><input value="${stu.name}" name="stuname" class="table-input" style="width: 50px">
                                 </td>
@@ -102,9 +124,8 @@
     </div>
 </div>
 
-<c:set var="addStudentAction" value="'../add_student?teacherId=${teacher.id}'"/>
 <div id="add-dialog" title="添加学生信息">
-    <form id="add-form" method="post" action="${addStudentAction}">
+    <form id="add-form" method="post" action="../add_student?teacherId=${teacher.id}">
         姓名:<input name="name" type="text"><br>
         性别:<input name="sex" type="text"><br>
         专业:<input name="major" type="text"><br>

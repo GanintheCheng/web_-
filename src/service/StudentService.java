@@ -21,7 +21,7 @@ public interface StudentService {
 
     boolean isNumeric(String str);
 
-    void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor) throws Exception;
+    void updateStudentInfo(String stuno, String stuname, String stusex) throws Exception;
 
     void updateStudentInfo(String stuno, String stuname, String stusex, String stumajor, String password,int classId) throws Exception;
 

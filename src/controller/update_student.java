@@ -27,11 +27,10 @@ public class update_student extends HttpServlet {
         String stuno = request.getParameter("stuno");
         String stuname = request.getParameter("stuname");
         String stusex = request.getParameter("stusex");
-        String stumajor = request.getParameter("stumajor");
         String teacherId = request.getParameter("teacherId");
 
         try {
-            studentService.updateStudentInfo(stuno, stuname, stusex, stumajor);
+            studentService.updateStudentInfo(stuno, stuname, stusex);
         } catch (Exception e) {
             out.print(e);
         }

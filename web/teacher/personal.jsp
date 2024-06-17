@@ -5,6 +5,34 @@
 <head>
     <title>main</title>
     <link href="../resources/css/default.css" rel="stylesheet"/>
+    <script>
+        function validateForm() {
+            var password = document.forms["updateForm"]["password"].value;
+            var email = document.forms["updateForm"]["email"].value;
+            var sex = document.forms["updateForm"]["sex"].value.toLowerCase(); // Convert to lowercase for case-insensitive check
+
+            // Password length check
+            if (password.length < 6) {
+                alert("密码必须大于等于6位");
+                return false;
+            }
+
+            // Email format check
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("请输入正确的邮箱格式");
+                return false;
+            }
+
+            // Sex check
+            if (sex !== "男" && sex !== "女") {
+                alert("性别必须为男或女");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 <body>
 <c:set var="teacher" value="${sessionScope.info}" />
@@ -36,14 +64,14 @@
                 <input type="file" name="img">
                 <input type="submit" value="上传头像">
             </form>
-            <form method="post" action="../update_teacher" class="personalForm">
+            <form method="post" action="../update_teacher" class="personalForm" name="updateForm" onsubmit="return validateForm()">
                 <input name="uid" value="${teacher.id}" type="hidden">
                 用户名:<input type="text" value="${teacher.account}" class="personalInput" readonly onmousedown ><br>
-                姓名: <input type="text" name="name" value="${teacher.name}" class="personalInput"><br>
+                姓名: <input type="text" name="name" value="${teacher.name}" class="personalInput" required><br>
                 管理班级: <input type="text" name="name" value="${teacher.classListString}" class="personalInput" readonly onmousedown><br>
                 性别: <input type="text" name="sex" value="${teacher.sex}" class="personalInput"><br>
-                邮箱: <input type="text" name="email" value="${teacher.email}" class="personalInput"><br>
-                密码: <input type="text" name="password" value="${teacher.password}" class="personalInput"><br>
+                邮箱: <input type="email" name="email" value="${teacher.email}" class="personalInput" required><br>
+                密码: <input type="password" name="password" value="${teacher.password}" class="personalInput" required><br>
                 <input type="submit" value="保存" style="width: 100px; height: 30px; margin-top: 20px">
             </form>
         </div>

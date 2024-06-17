@@ -25,7 +25,7 @@ public interface StudentD {
 
     Student getStudent(ResultSet rs) throws Exception;
 
-    void updateStudentInfo(String id, String name, String sex, String major) throws Exception;
+    void updateStudentInfo(String id, String name, String sex) throws Exception;
 
     void updateStudentSecurity(String id, String email, String password) throws Exception;
 

@@ -43,7 +43,7 @@ public class check_register extends HttpServlet {
         String randStr = (String) session.getAttribute("randStr");
 
         if (!code.equals(randStr)) {
-            out.print("<script>alert(\"验证码错误！\");location.href = \"register.jsp\";</script>");
+            out.print("<script>alert(\"验证码错误！\");location.href = \"register.jsp?\";</script>");
         } else {
             try {
                 Teacher teacher = registerService.registerTeacher(user, password, email);
@@ -51,7 +51,7 @@ public class check_register extends HttpServlet {
                     session.setAttribute("info", teacher);
                     out.println("<script>");
                     out.println("alert('您的教师账号为" + user + ",可用其登录');");
-                    out.println("window.location.href='one_page_student';");
+                    out.println("window.location.href='one_page_student?teacherId=" + user + "';");
                     out.println("</script>");
                     out.flush();
                 } else {

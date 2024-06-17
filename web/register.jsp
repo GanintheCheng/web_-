@@ -12,6 +12,15 @@
             var image = document.getElementById("captchaImg");
             image.src = "code?a=" + new Date().getTime(); // 加入时间戳确保每次刷新都是新的验证码
         }
+
+        function check(form) {
+            var password = form.password.value;
+            if (password.length < 6) {
+                alert("密码长度不能少于6位！");
+                return false;
+            }
+            return true;
+        }
     </script>
 </head>
 <body>
@@ -24,15 +33,14 @@
     </h5>
     <form action="check_register" method="post" onsubmit="return check(this)">
         <div class="form-group">
-            <input type="email" name="email" class="form-control email" placeholder="安全邮箱">
-            <input type="password" name="password" class="form-control password1" placeholder="密码">
-            <input type="text" name="code" placeholder="验证码" class="code">
-            <img id="captchaImg" src="code" style="float: right; width: 90px;height: 50px; margin-top: 10px"
-                 onclick="refreshCaptcha()" />
+            <input type="email" name="email" class="form-control email" placeholder="安全邮箱" required>
+            <input type="password" name="password" class="form-control password1" placeholder="密码" required>
+            <input type="text" name="code" placeholder="验证码" class="code" required>
+            <img id="captchaImg" src="code" style="float: right; width: 90px; height: 50px; margin-top: 10px" onclick="refreshCaptcha()"/>
             <input type="submit" value="注册" class="btn btn-primary btn-lg btn-block we"/>
         </div>
     </form>
-    <div style="font-size: smaller;color: gray;font-weight: 900">注册后系统将为您自动分配用户名,作为登录凭证</div>
+    <div style="font-size: smaller; color: gray; font-weight: 900">注册后系统将为您自动分配用户名, 作为登录凭证</div>
 </div>
 <script src="resources/js/jquery-3.2.1.min.js"></script>
 <script src="resources/js/popper.min.js"></script>

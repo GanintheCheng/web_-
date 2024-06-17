@@ -5,6 +5,30 @@
 <head>
     <title>main</title>
     <link href="../resources/css/default.css" rel="stylesheet"/>
+    <script>
+        // Function to validate form inputs before submission
+        function validateForm() {
+            var database = document.getElementsByName("database")[0].value;
+            var android = document.getElementsByName("android")[0].value;
+            var jsp = document.getElementsByName("jsp")[0].value;
+
+            if (isNaN(database) || isNaN(android) || isNaN(jsp)) {
+                alert("分数必须是数字！");
+                return false;
+            }
+
+            database = parseFloat(database);
+            android = parseFloat(android);
+            jsp = parseFloat(jsp);
+
+            if (database <= 0 || database > 100 || android <= 0 || android > 100 || jsp <= 0 || jsp > 100) {
+                alert("分数必须在1到100之间！");
+                return false;
+            }
+            alert("修改成功！");
+            return true;
+        }
+    </script>
 </head>
 <body>
 <c:set var="teacher" value="${sessionScope.info}"/>
@@ -34,7 +58,7 @@
         </div>
         <c:if test="${not empty scores}">
             <form method="post" action="../update_score?teacherId=${teacher.id}"
-                  style="height: 525px; margin-top: 20px">
+                  style="height: 525px; margin-top: 20px" onsubmit="return validateForm()">
                 <input type="button" class="btn-add" onclick="location.href='../export_excel?teacherId=${teacher.id}';"
                        value="导出EXCEL">
                 <input type="submit" class="btn-add" style="float: right;margin-bottom: 30px" value="修改">
@@ -82,5 +106,12 @@
         </c:if>
     </div>
 </div>
+
+<c:if test="${not empty successMessage}">
+    <script>
+        showSuccessMessage();
+    </script>
+</c:if>
+
 </body>
 </html>
