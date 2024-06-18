@@ -203,7 +203,6 @@ public class StudentDImpl extends BaseDao implements StudentD {
 
     @Override
     public void updateStudentSecurity(String id, String email, String password) throws Exception {
-
         initConnection();
         String sql = "update student set password=?, email=? where id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -259,6 +258,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
             stu.setSchool_date(rs.getString("school_date"));
             stu.setMajor(rs.getString("major"));
             stu.setEmail(rs.getString("email"));
+            stu.setAccount(rs.getString("account"));
             stu.setStudentClass(classD.getClassById(rs.getInt("class_id")));
             al.add(stu);
         }

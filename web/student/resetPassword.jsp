@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1 style="margin: 50px 80px; color: darkgray; font-family: cursive;">欢迎来到教务系统</h1>
-<c:set var="resetCode" value="${sessionScope.reset}"/>
+<c:set var="resetCode" value="${reset}"/>
 <c:choose>
     <c:when test="${param.reset != resetCode}">
         <script>alert("验证码错误!");

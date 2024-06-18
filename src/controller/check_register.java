@@ -51,8 +51,6 @@ public class check_register extends HttpServlet {
                     out.println("window.location.href='one_page_student?teacherId=" + user + "';");
                     out.println("</script>");
                     out.flush();
-                } else {
-                    out.print("<script>alert(\"此用户已经注册！\");location.href = \"register.jsp\";</script>");
                 }
             } catch (Exception e) {
                 out.print("<script>alert(\"此用户已经注册！\");location.href = \"register.jsp\";</script>");

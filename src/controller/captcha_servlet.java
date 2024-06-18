@@ -30,8 +30,7 @@ public class captcha_servlet extends HttpServlet {
         g.setColor(new Color(200, 200, 200));
         g.fillRect(0, 0, width, height);
         // 随机产生四位数字
-        Random rnd = new Random();
-        int randNum = rnd.nextInt(8999) + 1000;
+        int randNum = (int)(Math.random()*9000)+1000;
         String randStr = String.valueOf(randNum);
         // 将验证码存入 session
         HttpSession session = request.getSession(true);
@@ -42,8 +41,8 @@ public class captcha_servlet extends HttpServlet {
         g.drawString(randStr, 10, 17);
         // 随机产生100个干扰点
         for (int i = 0; i < 100; i++) {
-            int x = rnd.nextInt(width);
-            int y = rnd.nextInt(height);
+            int x = (int)(Math.random()*width);
+            int y = (int)(Math.random()*height);
             g.drawOval(x, y, 1, 1);
         }
         // 输出到页面

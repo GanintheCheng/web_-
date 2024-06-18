@@ -11,25 +11,21 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public ArrayList<Score> getOnePageScores(int currentIndex, int size) throws Exception {
-        ScoreDImpl scoD = new ScoreDImpl();
-        return scoD.getOnePage(currentIndex, size);
+        return scoreDImpl.getOnePage(currentIndex, size);
     }
 
     public ArrayList<Score> getOnePageScores(int currentIndex, int size,String teacherId) throws Exception {
-        ScoreDImpl scoD = new ScoreDImpl();
-        return scoD.getOnePage(currentIndex, size,teacherId);
+        return scoreDImpl.getOnePage(currentIndex, size,teacherId);
     }
 
     @Override
     public Score findScoreWithId(String id) throws Exception {
-        ScoreDImpl scoreDImpl = new ScoreDImpl();
         return scoreDImpl.findWithId(id);
     }
 
     @Override
     public int getScoreCount() throws Exception {
-        ScoreDImpl scoD = new ScoreDImpl();
-        return scoD.getScoreCount();
+        return scoreDImpl.getScoreCount();
     }
 
     @Override

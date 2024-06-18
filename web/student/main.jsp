@@ -13,7 +13,7 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
-<c:set var="student" value="${sessionScope.info}" />
+<c:set var="student" value="${info}" />
 <div id="page" class="container">
     <div id="header">
         <div id="logo">

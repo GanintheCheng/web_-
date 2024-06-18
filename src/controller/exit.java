@@ -16,8 +16,9 @@ public class exit extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //清除cookie, 跳到起始页
+        //清除cookie,session, 跳到起始页
         loginService.exitLogin(request, response);
+        request.getSession().invalidate();
         response.sendRedirect("login.jsp");
     }
 }

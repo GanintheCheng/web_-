@@ -24,7 +24,6 @@ public class add_teacher_admin extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-
 //        String id = request.getParameter("teacherId");
         String id = null;
         try {

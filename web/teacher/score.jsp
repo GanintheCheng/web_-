@@ -31,9 +31,9 @@
     </script>
 </head>
 <body>
-<c:set var="teacher" value="${sessionScope.info}"/>
-<c:set var="scores" value="${sessionScope.onePageScore}"/>
-<c:set var="sumIndex" value="${sessionScope.sumScoreIndex}"/>
+<c:set var="teacher" value="${info}"/>
+<c:set var="scores" value="${onePageScore}"/>
+<c:set var="sumIndex" value="${sumScoreIndex}"/>
 
 <div id="page" class="container">
     <div id="header">

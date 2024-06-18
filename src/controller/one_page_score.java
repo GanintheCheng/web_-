@@ -64,8 +64,11 @@ public class one_page_score extends HttpServlet {
             try {
                 Score score = scoreService.findScoreWithId(key);
                 ArrayList<Score> scores = new ArrayList<>();
+                ArrayList<Student> students = new ArrayList<>();
+                students.add(studentService.findStudentWithId(key));
                 scores.add(score);
                 session.setAttribute("onePageScore", scores);
+                session.setAttribute("onePageStudent", students);
                 session.setAttribute("sumScoreIndex", 1);
                 response.sendRedirect("teacher/score.jsp");
             } catch (Exception e) {

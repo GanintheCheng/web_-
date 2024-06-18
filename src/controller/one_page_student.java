@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Teacher;
 import service.impl.ClassServiceIml;
 import service.impl.StudentServiceIml;
 
@@ -43,6 +44,7 @@ public class one_page_student extends HttpServlet {
             int currentIndex, count, size = 10;
             String index = request.getParameter("index");
             String teacherId = request.getParameter("teacherId");
+            teacherId = (((Teacher)(session.getAttribute("info"))).getId());
             if (index == null)
                 index = "1";
             currentIndex = Integer.parseInt(index);
