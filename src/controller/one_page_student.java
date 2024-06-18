@@ -1,6 +1,5 @@
 package controller;
 
-import dao.impl.StudentDImpl;
 import model.Class;
 import model.Student;
 
@@ -12,13 +11,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import service.impl.ClassServiceIml;
 import service.impl.StudentServiceIml;
-import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @WebServlet("/one_page_student")
 public class one_page_student extends HttpServlet {

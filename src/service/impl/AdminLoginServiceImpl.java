@@ -3,10 +3,9 @@ package service.impl;
 import dao.impl.AdminDImpl;
 import model.Admin;
 import service.AdminLoginService;
-import util.factory;
 
 public class AdminLoginServiceImpl implements AdminLoginService {
-    private final AdminDImpl AdminDao = factory.getAdminDImpl();
+    private final AdminDImpl AdminDao = new AdminDImpl();
 
     @Override
     public boolean checkAdminLogin(String account, String password) throws Exception {

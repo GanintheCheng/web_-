@@ -1,16 +1,10 @@
 package dao.impl;
 
 import dao.BaseDao;
-import dao.ScoreD;
 import dao.StudentD;
 import model.Class;
 import model.Student;
-import model.Teacher;
-import service.impl.ClassServiceIml;
-import service.impl.TeacherServiceIml;
-import util.factory;
 
-import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -181,6 +175,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
 
 
     public void updateStudentInfo(String id, String name, String sex) throws Exception {
+
         initConnection();
         String sql = "update student set name=?, sex=? where id=?";
         PreparedStatement ps = conn.prepareStatement(sql);

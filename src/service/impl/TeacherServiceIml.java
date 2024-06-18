@@ -5,15 +5,14 @@ import dao.impl.ScoreDImpl;
 import dao.impl.TeacherDImpl;
 import model.Teacher;
 import service.TeacherService;
-import util.factory;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class TeacherServiceIml implements TeacherService {
-    private final ScoreDImpl scoreDao = factory.getScoreDImpl();
-    private final TeacherDImpl teacherDao = factory.getTeacherDImpl();
-    private final ClassDImpl classDao = factory.getClassDImpl();
+    private final ScoreDImpl scoreDao = new ScoreDImpl();
+    private final TeacherDImpl teacherDao = new TeacherDImpl();
+    private final ClassDImpl classDao = new ClassDImpl();
 
     @Override
     public ArrayList<Teacher> getOnePageTeachers(int currentIndex, int size) throws Exception {

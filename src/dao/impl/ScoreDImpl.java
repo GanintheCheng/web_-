@@ -2,11 +2,8 @@ package dao.impl;
 
 import dao.BaseDao;
 import dao.ScoreD;
-import model.Class;
 import model.Score;
 import model.Student;
-import service.impl.StudentServiceIml;
-import util.factory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,13 +25,12 @@ public class ScoreDImpl extends BaseDao implements ScoreD {
     }
 
     @Override
-    public boolean deleteScore(String id) throws Exception {
+    public void deleteScore(String id) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();
         String sql = "delete from score where id='" + id + "'";
-        int i = stat.executeUpdate(sql);
+        stat.executeUpdate(sql);
         closeConnection();
-        return i == 1;
     }
 
     @Override

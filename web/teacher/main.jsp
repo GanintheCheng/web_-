@@ -32,7 +32,7 @@
     </script>
 </head>
 <body>
-<c:set var="teacher" value="${sessionScope.info}"/>
+<c:set var="teacher" value="${info}"/>
 <c:set var="classList" value="${teacher.classList}"/>
 
 <div id="page" class="container">

@@ -1,6 +1,5 @@
 package controller;
 
-import dao.impl.TeacherDImpl;
 import model.Teacher;
 
 import jakarta.servlet.ServletException;
@@ -10,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import service.impl.TeacherServiceIml;
-import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -4,14 +4,13 @@ import dao.impl.ScoreDImpl;
 import dao.impl.StudentDImpl;
 import model.Student;
 import service.StudentService;
-import util.factory;
 
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 
 public class StudentServiceIml implements StudentService {
-    private final StudentDImpl studentDao = factory.getStudentDImpl();
-    private final ScoreDImpl scoreDao = factory.getScoreDImpl();
+    private final StudentDImpl studentDao = new StudentDImpl();
+    private final ScoreDImpl scoreDao = new ScoreDImpl();
 
 
     @Override

@@ -3,12 +3,11 @@ package service.impl;
 import dao.impl.ScoreDImpl;
 import model.Score;
 import service.ScoreService;
-import util.factory;
 
 import java.util.ArrayList;
 
 public class ScoreServiceImpl implements ScoreService {
-    private final ScoreDImpl scoreDImpl = factory.getScoreDImpl();
+    private final ScoreDImpl scoreDImpl = new ScoreDImpl();
 
     @Override
     public ArrayList<Score> getOnePageScores(int currentIndex, int size) throws Exception {

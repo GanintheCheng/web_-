@@ -11,13 +11,11 @@
             var email = document.forms["updateForm"]["email"].value;
             var sex = document.forms["updateForm"]["sex"].value.toLowerCase(); // Convert to lowercase for case-insensitive check
 
-            // Password length check
             if (password.length < 6) {
                 alert("密码必须大于等于6位");
                 return false;
             }
 
-            // Email format check
             var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
                 alert("请输入正确的邮箱格式");

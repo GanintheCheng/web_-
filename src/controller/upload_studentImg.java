@@ -1,6 +1,5 @@
 package controller;
 
-import dao.impl.StudentDImpl;
 import jakarta.servlet.http.HttpSession;
 import model.Student;
 import org.apache.commons.fileupload2.core.DiskFileItem;
@@ -14,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 import service.impl.StudentServiceIml;
-import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;

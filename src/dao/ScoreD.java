@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public interface ScoreD {
     public boolean insertScore(String id) throws Exception;
 
-    public boolean deleteScore(String id) throws Exception;
+    public void deleteScore(String id) throws Exception;
 
     public void updateScoreInfo(String id, String database, String android, String jsp) throws Exception;
 

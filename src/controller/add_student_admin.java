@@ -1,16 +1,11 @@
 package controller;
 
-import dao.impl.ScoreDImpl;
-import dao.impl.StudentDImpl;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.StudentService;
 import service.impl.StudentServiceIml;
-import util.factory;
 import util.myuntils;
 
 import java.io.IOException;

@@ -1,8 +1,6 @@
 package controller;
 
-import dao.impl.TeacherDImpl;
 import model.Teacher;
-import util.factory;
 import util.myuntils;
 
 import jakarta.servlet.ServletException;
@@ -15,7 +13,6 @@ import service.impl.RegisterServiceImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet("/check_register")
 public class check_register extends HttpServlet {

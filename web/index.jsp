@@ -5,7 +5,6 @@
     <title>Index Page</title>
 </head>
 <body>
-<c:redirect url="http://${header.host}${pageContext.request.contextPath}/check_cookie"/>
-<%--    <c:redirect url="check_cookie"/>--%>
+<c:redirect url="http://localhost:8080/stu/check_cookie"/>
 </body>
 </html>

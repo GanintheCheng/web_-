@@ -1,6 +1,5 @@
 package controller;
 
-import dao.impl.AdminDImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Admin;
 import service.impl.AdminServiceImpl;
-import util.factory;
 
 import java.io.IOException;
 import java.io.PrintWriter;

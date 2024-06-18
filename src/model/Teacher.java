@@ -79,6 +79,9 @@ public class Teacher {
     }
 
     public String getClassListString() {
+        if(classList.isEmpty()) {
+            return "占位班级";
+        }
         String classListString = "";
         for (Class c : classList) {
             classListString += c.getName() + "|";
