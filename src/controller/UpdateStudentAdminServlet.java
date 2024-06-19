@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/update_student_admin")
-public class update_student_admin extends HttpServlet {
+public class UpdateStudentAdminServlet extends HttpServlet {
     public StudentServiceIml studentService = new StudentServiceIml();
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

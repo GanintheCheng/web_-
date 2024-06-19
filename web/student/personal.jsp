@@ -16,6 +16,9 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
+<c:if test="${empty info}">
+    <c:redirect url="http://${header.host}${pageContext.request.contextPath}/login.jsp"/>
+</c:if>
 <c:set var="student" value="${sessionScope.info}" />
 <div id="page" class="container">
     <div id="header">

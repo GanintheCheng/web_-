@@ -14,6 +14,7 @@ public class ScoreServiceImpl implements ScoreService {
         return scoreDImpl.getOnePage(currentIndex, size);
     }
 
+    @Override
     public ArrayList<Score> getOnePageScores(int currentIndex, int size,String teacherId) throws Exception {
         return scoreDImpl.getOnePage(currentIndex, size,teacherId);
     }
@@ -35,10 +36,12 @@ public class ScoreServiceImpl implements ScoreService {
         }
     }
 
+    @Override
     public void insertScore(String id) throws Exception {
         scoreDImpl.insertScore(id);
     }
 
+    @Override
     public void deleteScore(String id) throws Exception {
         scoreDImpl.deleteScore(id);
     }

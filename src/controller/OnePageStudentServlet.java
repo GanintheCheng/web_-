@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/one_page_student")
-public class one_page_student extends HttpServlet {
+public class OnePageStudentServlet extends HttpServlet {
     private final StudentServiceIml studentService = new StudentServiceIml();
     private final ClassServiceIml classService = new ClassServiceIml();
 

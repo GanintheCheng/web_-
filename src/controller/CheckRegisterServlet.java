@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/check_register")
-public class check_register extends HttpServlet {
+public class CheckRegisterServlet extends HttpServlet {
     private final RegisterServiceImpl registerService = new RegisterServiceImpl();
 
     @Override

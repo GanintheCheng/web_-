@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/export_excel")
-public class export_score extends HttpServlet {
+public class ExportScoreServlet extends HttpServlet {
     TeacherServiceIml teacherService = new TeacherServiceIml();
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

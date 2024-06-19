@@ -37,6 +37,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
         return stu;
     }
 
+    @Override
     public ArrayList<Student> findWithPartialId(String partialId) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();
@@ -64,7 +65,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
     }
 
     @Override
-    public boolean insertStudent(String id, String name, String sex, String school_date, String major) throws Exception {
+    public void insertStudent(String id, String name, String sex, String school_date, String major) throws Exception {
         initConnection();
         String sql = "insert into student(id, account, name, sex, school_date, major) values(?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -76,10 +77,10 @@ public class StudentDImpl extends BaseDao implements StudentD {
         ps.setString(6, major);
         int i = ps.executeUpdate();
         closeConnection();
-        return i == 1;
     }
 
-    public boolean insertStudent(String id, String name, String sex, String school_date, String major, int stuClass) throws Exception {
+    @Override
+    public void insertStudent(String id, String name, String sex, String school_date, String major, int stuClass) throws Exception {
         initConnection();
         String sql = "insert into student(id, account, name, sex, school_date, major,class_id) values(?, ?, ?, ?, ?, ?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -92,17 +93,15 @@ public class StudentDImpl extends BaseDao implements StudentD {
         ps.setInt(7, stuClass);
         int i = ps.executeUpdate();
         closeConnection();
-        return i == 1;
     }
 
     @Override
-    public boolean deleteStudent(String id) throws Exception {
+    public void deleteStudent(String id) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();
         String sql = "delete from student where id='" + id + "'";
         int i = stat.executeUpdate(sql);
         closeConnection();
-        return i == 1;
     }
 
     @Override
@@ -119,6 +118,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
         return al;
     }
 
+    @Override
     public ArrayList<Student> getOnePage(int page, int size, String teacherId) throws Exception {
         ArrayList<Student> al = new ArrayList<>();
         initConnection();
@@ -153,6 +153,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
         return count;
     }
 
+    @Override
     public int getStudentCount(String teacherId) throws Exception {
         initConnection();
         List<Class> classList = teacherD.findWithId(teacherId).getClassList();
@@ -173,7 +174,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
         return count;
     }
 
-
+    @Override
     public void updateStudentInfo(String id, String name, String sex) throws Exception {
 
         initConnection();
@@ -186,7 +187,8 @@ public class StudentDImpl extends BaseDao implements StudentD {
         closeConnection();
     }
 
-    public void updateStudentInfo(String id, String name, String sex, String major, String password,int classId) throws Exception {
+    @Override
+    public void updateStudentInfo(String id, String name, String sex, String major, String password, int classId) throws Exception {
         initConnection();
         String sql = "update student set name=?, sex=?, major=?, password=?, class_id=? where id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -194,7 +196,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
         ps.setString(2, sex);
         ps.setString(3, major);
         ps.setString(4, password);
-        ps.setInt(5,classId);
+        ps.setInt(5, classId);
         ps.setString(6, id);
         ps.executeUpdate();
         closeConnection();
@@ -264,6 +266,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
         }
     }
 
+    @Override
     public String getMaxStudentId() throws Exception {
         initConnection();
         String maxIdString = null;
@@ -282,7 +285,7 @@ public class StudentDImpl extends BaseDao implements StudentD {
         return maxIdString;
     }
 
-
+    @Override
     public ArrayList<Student> getStudentListWithTeacherId(String teacherId) throws Exception {
         initConnection();
         ArrayList<Student> students = new ArrayList<>();
@@ -306,5 +309,4 @@ public class StudentDImpl extends BaseDao implements StudentD {
         closeConnection();
         return students;
     }
-
 }

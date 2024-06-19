@@ -10,9 +10,10 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
-<c:if test="${admin == null}">
-    <c:redirect url="login.jsp"/>
+<c:if test="${empty admin}">
+    <c:redirect url="http://${header.host}${pageContext.request.contextPath}/login.jsp"/>
 </c:if>
+
 <div id="page" class="container">
     <div id="header">
         <div id="logo">

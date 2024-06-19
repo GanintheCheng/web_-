@@ -12,7 +12,7 @@
 </head>
 <body>
 <c:if test="${empty admin}">
-    <c:redirect url="login.jsp" />
+    <c:redirect url="http://${header.host}${pageContext.request.contextPath}/login.jsp" />
 </c:if>
 
 <div id="page" class="container">

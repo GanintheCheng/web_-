@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/add_student")
-public class add_student extends HttpServlet {
+public class AddStudentServlet extends HttpServlet {
     private final StudentServiceIml studentService = new StudentServiceIml();
 
     @Override

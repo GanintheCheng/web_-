@@ -24,6 +24,7 @@ public class StudentServiceIml implements StudentService {
         scoreDao.insertScore(id);
     }
 
+    @Override
     public void addStudent(String id, String name, String sex, String major, String school_date, int stuClass) throws Exception {
         studentDao.insertStudent(id, name, sex, school_date, major, stuClass);
         scoreDao.insertScore(id);
@@ -40,6 +41,7 @@ public class StudentServiceIml implements StudentService {
         return studentDao.getOnePage(currentIndex, size);
     }
 
+    @Override
     public ArrayList<Student> getOnePageStudents(int currentIndex, int size, String teacherId) throws Exception {
         return studentDao.getOnePage(currentIndex, size, teacherId);
     }
@@ -54,6 +56,7 @@ public class StudentServiceIml implements StudentService {
         return studentDao.findWithName(name);
     }
 
+    @Override
     public ArrayList<Student> findStudentsWithTeacherId(String teacherId) throws Exception {
         return studentDao.getStudentListWithTeacherId(teacherId);
     }
@@ -63,6 +66,7 @@ public class StudentServiceIml implements StudentService {
         return studentDao.getStudentCount();
     }
 
+    @Override
     public int getStudentCount(String teacherId) throws Exception {
         return studentDao.getStudentCount(teacherId);
     }

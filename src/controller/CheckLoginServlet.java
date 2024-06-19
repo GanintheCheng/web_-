@@ -1,7 +1,5 @@
 package controller;
 
-import dao.impl.StudentDImpl;
-import dao.impl.TeacherDImpl;
 import model.Student;
 import model.Teacher;
 
@@ -14,7 +12,7 @@ import service.impl.ScoreServiceImpl;
 import java.io.IOException;
 
 @WebServlet("/check_login")
-public class check_login extends HttpServlet {
+public class CheckLoginServlet extends HttpServlet {
     private final LoginServiceImpl loginService = new LoginServiceImpl();
     private final ScoreServiceImpl scoreService = new ScoreServiceImpl();
 

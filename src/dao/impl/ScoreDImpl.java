@@ -72,6 +72,7 @@ public class ScoreDImpl extends BaseDao implements ScoreD {
         return al;
     }
 
+    @Override
     public ArrayList<Score> getOnePage(int page, int size, String teacherId) throws Exception {
         ArrayList<Score> al = new ArrayList<>();
         ArrayList<Student> students = new ArrayList<>();

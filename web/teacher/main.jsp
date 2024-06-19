@@ -32,6 +32,9 @@
     </script>
 </head>
 <body>
+<c:if test="${empty info}">
+    <c:redirect url="http://${header.host}${pageContext.request.contextPath}/login.jsp"/>
+</c:if>
 <c:set var="teacher" value="${info}"/>
 <c:set var="classList" value="${teacher.classList}"/>
 

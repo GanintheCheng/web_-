@@ -1,6 +1,5 @@
 package controller;
 
-import dao.impl.ClassDImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/one_page_student_admin")
-public class one_page_student_admin extends HttpServlet {
+public class OnePageStudentAdminServlet extends HttpServlet {
     private final StudentServiceIml studentService = new StudentServiceIml();
     private final ClassServiceIml classService = new ClassServiceIml();
 

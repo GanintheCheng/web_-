@@ -13,6 +13,9 @@
     <link href="../resources/css/forget.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+<c:if test="${empty info}">
+    <c:redirect url="http://${header.host}${pageContext.request.contextPath}/login.jsp"/>
+</c:if>
 <h1 style="margin: 50px 80px; color: darkgray; font-family: cursive;">欢迎来到教务系统</h1>
 <c:set var="resetCode" value="${sessionScope.reset}" />
 <c:choose>

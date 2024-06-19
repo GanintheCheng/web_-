@@ -1,22 +1,20 @@
 package controller;
 
-import model.Teacher;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import service.impl.TeacherServiceIml;
+import model.Admin;
+import service.impl.AdminServiceImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/update_teacher")
-public class update_teacher extends HttpServlet {
-    public final TeacherServiceIml teacherService = new TeacherServiceIml();
-
+@WebServlet("/update_admin")
+public class UpdateAdminServlet extends HttpServlet {
+    private final AdminServiceImpl adminService = new AdminServiceImpl();
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
@@ -26,15 +24,14 @@ public class update_teacher extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
-        String uid = request.getParameter("uid");
-        String name = request.getParameter("name");
-        String sex = request.getParameter("sex");
-        String email = request.getParameter("email");
+        int uid = Integer.parseInt(request.getParameter("uid"));
+        String account = request.getParameter("account");
         String password = request.getParameter("password");
+        String name = request.getParameter("name");
         try {
-            Teacher teacher = teacherService.updateTeacher(uid, name, sex, email, password);
-            session.setAttribute("info", teacher);
-            out.print("<script>alert(\"保存成功！\");location.href = \"teacher/personal.jsp\";</script>");
+            Admin admin = adminService.updateAdmin(uid, account, password, name);
+            session.setAttribute("admin", admin);
+            out.print("<script>alert(\"保存成功！\");location.href = \"admin/main.jsp\";</script>");
         } catch (Exception e) {
             out.print(e);
         }

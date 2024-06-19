@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/admin_check_login")
-public class admin_check_login extends HttpServlet {
+public class AdminCheckLoginServlet extends HttpServlet {
     private final AdminLoginServiceImpl adminLoginServiceImpl = new AdminLoginServiceImpl();
 
     @Override

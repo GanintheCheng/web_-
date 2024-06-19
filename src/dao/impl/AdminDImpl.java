@@ -1,16 +1,16 @@
 package dao.impl;
 
+import dao.AdminD;
 import dao.BaseDao;
 import model.Admin;
-import model.Student;
-import model.Teacher;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-public class AdminDImpl extends BaseDao {
+public class AdminDImpl extends BaseDao implements AdminD {
+    @Override
     public Admin checkAccount(String account, String password) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();
@@ -20,7 +20,7 @@ public class AdminDImpl extends BaseDao {
         closeConnection();
         return admin;
     }
-
+    @Override
     public Admin getAdmin(ResultSet rs) throws Exception {
         initConnection();
         Admin admin = null;
@@ -33,7 +33,7 @@ public class AdminDImpl extends BaseDao {
         }
         return admin;
     }
-
+    @Override
     public Admin findWithId(int id) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();
@@ -43,7 +43,7 @@ public class AdminDImpl extends BaseDao {
         closeConnection();
         return admin;
     }
-
+    @Override
     public Admin findWithAccount(String account) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();
@@ -53,7 +53,7 @@ public class AdminDImpl extends BaseDao {
         closeConnection();
         return admin;
     }
-
+    @Override
     public Admin updateAdmin(int id, String account, String password, String name) throws Exception {
 
         initConnection();

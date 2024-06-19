@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @WebServlet("/upload_studentImg")
-public class upload_studentImg extends HttpServlet {
+public class UploadStudentImgServlet extends HttpServlet {
     StudentServiceIml studentServiceIml = new StudentServiceIml();
 
     @Override

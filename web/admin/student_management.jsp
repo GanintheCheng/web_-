@@ -3,7 +3,6 @@
 <%@ page import="service.impl.ClassServiceIml" %>
 <%@ page import="java.util.List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%-- Created by IntelliJ IDEA.
   User: gzc
   Date: 2024
@@ -21,7 +20,7 @@
 </head>
 <body>
 <c:if test="${empty admin}">
-    <c:redirect url="login.jsp"/>
+    <c:redirect url="http://${header.host}${pageContext.request.contextPath}/login.jsp" />
 </c:if>
 
 <div id="page" class="container">

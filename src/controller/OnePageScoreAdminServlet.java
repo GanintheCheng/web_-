@@ -1,7 +1,5 @@
 package controller;
 
-import dao.impl.ScoreDImpl;
-import dao.impl.StudentDImpl;
 import model.Score;
 import model.Student;
 
@@ -11,9 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import service.ScoreService;
 import service.impl.ScoreServiceImpl;
-import service.StudentService;
 import service.impl.StudentServiceIml;
 
 
@@ -21,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @WebServlet("/one_page_score_admin")
-public class one_page_score_admin extends HttpServlet {
+public class OnePageScoreAdminServlet extends HttpServlet {
     private final ScoreServiceImpl scoreService = new ScoreServiceImpl();
     private final StudentServiceIml studentService = new StudentServiceIml();
 

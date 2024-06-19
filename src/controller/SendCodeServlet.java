@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.Properties;
 
 @WebServlet("/send_code")
-public class send_code extends HttpServlet {
+public class SendCodeServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("user");
         TeacherDImpl teacherDImpl = new TeacherDImpl();
@@ -44,7 +44,6 @@ public class send_code extends HttpServlet {
                 sendVerificationCode(teacher.getEmail(), session);
                 request.setAttribute("user", teacher);
                 request.setAttribute("userType", "teacher");
-                // 修改此处为sendCode.jsp
                 request.getRequestDispatcher("sendCode.jsp").forward(request, response);
             }
         } else if (student != null) {
@@ -55,7 +54,6 @@ public class send_code extends HttpServlet {
                 sendVerificationCode(student.getEmail(), session);
                 request.setAttribute("user", student);
                 request.setAttribute("userType", "student");
-                // 修改此处为sendCode.jsp
                 request.getRequestDispatcher("sendCode.jsp").forward(request, response);
             }
         } else {
@@ -77,7 +75,6 @@ public class send_code extends HttpServlet {
             MimeMessage message = new MimeMessage(s);
             message.setFrom(new InternetAddress("1837761918@qq.com"));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toMail));
-
             message.setSubject(title);
             message.setText(content, "utf-8");
             message.setSentDate(new Date());

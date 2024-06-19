@@ -10,9 +10,9 @@ import service.impl.TeacherServiceIml;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/update_teacher_admin")
-public class update_teacher_admin extends HttpServlet {
-    public TeacherServiceIml teacherService = new TeacherServiceIml();
+@WebServlet("/update_teacher_password")
+public class UpdateTeacherPasswordServlet extends HttpServlet {
+    public final TeacherServiceIml teacherServiceIml = new TeacherServiceIml();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,19 +22,14 @@ public class update_teacher_admin extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        String[] teacherClasses = request.getParameterValues("teacherClasses");
-        String teacherId = request.getParameter("teacherId");
-        String teacherName = request.getParameter("teacherName");
-        String teacherSex = request.getParameter("teacherSex");
-        String teacherPassword = request.getParameter("teacherPassword");
+        String id = request.getParameter("id");
+        String password = request.getParameter("password");
 
         try {
-            teacherService.updateTeacherInfo(teacherClasses,teacherId, teacherName, teacherSex, teacherPassword);
+            teacherServiceIml.updateTeacherPassword(id, password);
+            out.print("<script>alert(\"修改成功\");window.location.href='login.jsp';</script>");
         } catch (Exception e) {
             out.print(e);
         }
-        out.println("<script>alert(\"修改成功,请重新登录\");</script>");
-        response.sendRedirect("one_page_teacher_admin");
     }
 }
-

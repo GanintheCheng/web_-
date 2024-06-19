@@ -1,7 +1,5 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Admin" %>
-<%@ page import="dao.impl.AdminDImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +10,10 @@
     <link href="../resources/css/default.css" rel="stylesheet"/>
 </head>
 <body>
+
+<c:if test="${empty admin}">
+    <c:redirect url="http://${header.host}${pageContext.request.contextPath}/login.jsp" />
+</c:if>
 
 <div id="page" class="container">
     <div id="header">

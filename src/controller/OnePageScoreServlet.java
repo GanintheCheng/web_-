@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/one_page_score")
-public class one_page_score extends HttpServlet {
+public class OnePageScoreServlet extends HttpServlet {
     private final ScoreServiceImpl scoreService = new ScoreServiceImpl();
     private final StudentServiceIml studentService = new StudentServiceIml();
 

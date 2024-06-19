@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/update_score_admin")
-public class update_score_admin extends HttpServlet {
+public class UpdateScoreAdminServlet extends HttpServlet {
     private final ScoreServiceImpl scoreUpdateService = new ScoreServiceImpl();
 
     @Override

@@ -1,6 +1,7 @@
 package dao.impl;
 
 import dao.BaseDao;
+import dao.ClassD;
 import model.Class;
 
 import java.sql.PreparedStatement;
@@ -10,7 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassDImpl extends BaseDao {
+public class ClassDImpl extends BaseDao implements ClassD {
+    @Override
     public Class getClassById(int id) throws Exception {
         initConnection();
         Class c = null;
@@ -22,6 +24,7 @@ public class ClassDImpl extends BaseDao {
         return c;
     }
 
+    @Override
     public List<Class> getListClassesWithIds(List<Integer> ids) throws Exception {
         initConnection();
         List<Class> classes = new ArrayList<Class>();
@@ -39,6 +42,7 @@ public class ClassDImpl extends BaseDao {
         return classes;
     }
 
+    @Override
     public Class getClass(ResultSet rs) throws SQLException {
         Class c = null;
         if (rs.next()) {
@@ -49,6 +53,7 @@ public class ClassDImpl extends BaseDao {
         return c;
     }
 
+    @Override
     public List<Class> getAllClasses() throws Exception {
         initConnection();
         List<Class> classes = new ArrayList<>();
@@ -65,7 +70,8 @@ public class ClassDImpl extends BaseDao {
         return classes;
     }
 
-     public void changeClassWithTeacherId(String[] classStrings, String teacherId) throws Exception {
+    @Override
+    public void changeClassWithTeacherId(String[] classStrings, String teacherId) throws Exception {
         initConnection();
         PreparedStatement ps = null;
         try {
@@ -92,7 +98,7 @@ public class ClassDImpl extends BaseDao {
             closeConnection();
         }
     }
-
+    @Override
     public void deleteTeacherClass(String teacherId) throws Exception {
         initConnection();
         Statement stat = conn.createStatement();

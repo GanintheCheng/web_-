@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/one_page_teacher_admin")
-public class one_page_teacher_admin extends HttpServlet {
+public class OnePageTeacherAdminServlet extends HttpServlet {
     private final TeacherServiceIml teacherServiceIml = new TeacherServiceIml();
     private final ClassServiceIml classService = new ClassServiceIml();
 
@@ -37,7 +37,7 @@ public class one_page_teacher_admin extends HttpServlet {
         String key = request.getParameter("key");
 
         if (key == null || key.equals("")) {
-            int currentIndex, count, size = 10;
+            int currentIndex, count, size = 5;
             String index = request.getParameter("index");
             if (index == null)
                 index = "1";

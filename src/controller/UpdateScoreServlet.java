@@ -5,14 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.impl.TeacherServiceIml;
+import service.impl.ScoreServiceImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/delete_teacher_admin")
-public class delete_teacher_admin extends HttpServlet {
-    public TeacherServiceIml teacher = new TeacherServiceIml();
+@WebServlet("/update_score")
+public class UpdateScoreServlet extends HttpServlet {
+    private final ScoreServiceImpl scoreUpdateService = new ScoreServiceImpl();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,10 +23,15 @@ public class delete_teacher_admin extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        String id = request.getParameter("id");
+        String[] id = request.getParameterValues("id");
+        String[] database = request.getParameterValues("database");
+        String[] android = request.getParameterValues("android");
+        String[] jsp = request.getParameterValues("jsp");
+        String teacherId = request.getParameter("teacherId");
+
         try {
-            teacher.deleteTeacher(id);
-            response.sendRedirect("one_page_teacher_admin");
+            scoreUpdateService.updateScores(id, database, android, jsp);
+            response.sendRedirect("one_page_score?teacherId=" + teacherId);
         } catch (Exception e) {
             out.print(e);
         }

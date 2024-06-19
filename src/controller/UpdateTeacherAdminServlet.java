@@ -5,14 +5,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.impl.StudentServiceIml;
+import service.impl.TeacherServiceIml;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/update_student")
-public class update_student extends HttpServlet {
-    public StudentServiceIml studentService = new StudentServiceIml();
+@WebServlet("/update_teacher_admin")
+public class UpdateTeacherAdminServlet extends HttpServlet {
+    public TeacherServiceIml teacherService = new TeacherServiceIml();
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
@@ -21,17 +22,19 @@ public class update_student extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        String stuno = request.getParameter("stuno");
-        String stuname = request.getParameter("stuname");
-        String stusex = request.getParameter("stusex");
+        String[] teacherClasses = request.getParameterValues("teacherClasses");
         String teacherId = request.getParameter("teacherId");
+        String teacherName = request.getParameter("teacherName");
+        String teacherSex = request.getParameter("teacherSex");
+        String teacherPassword = request.getParameter("teacherPassword");
 
         try {
-            studentService.updateStudentInfo(stuno, stuname, stusex);
+            teacherService.updateTeacherInfo(teacherClasses,teacherId, teacherName, teacherSex, teacherPassword);
         } catch (Exception e) {
             out.print(e);
         }
         out.println("<script>alert(\"修改成功,请重新登录\");</script>");
-        response.sendRedirect("one_page_student?teacherId="+teacherId);
+        response.sendRedirect("one_page_teacher_admin");
     }
 }
+

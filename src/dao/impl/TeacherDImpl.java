@@ -48,10 +48,11 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         Teacher teacher = findWithId(id);
         closeConnection();
         String[] strings = new String[]{"0"};
-        classD.changeClassWithTeacherId(strings,id);
+        classD.changeClassWithTeacherId(strings, id);
         return teacher;
     }
 
+    @Override
     public Teacher insertTeacher(String id, String name, String password, String sex, String email) throws Exception {
         initConnection();
         String sql = "insert into teacher(id, account, name, password, sex, email) values(?, ?, ?, ?, ?, ?)";
@@ -63,6 +64,8 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         ps.setString(5, sex);
         ps.setString(6, email);
         ps.executeUpdate();
+        String[] strings = new String[]{"0"};
+        classD.changeClassWithTeacherId(strings, id);
         Teacher teacher = findWithId(id);
         closeConnection();
         return teacher;
@@ -125,6 +128,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         closeConnection();
     }
 
+    @Override
     public ArrayList<Teacher> getOnePage(int page, int size) throws Exception {
         ArrayList<Teacher> al = new ArrayList<>();
         initConnection();
@@ -138,6 +142,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         return al;
     }
 
+    @Override
     public void getMoreTeacher(ArrayList<Teacher> al, ResultSet rs) throws Exception {
         while (rs.next()) {
             Teacher tea = new Teacher();
@@ -152,6 +157,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         }
     }
 
+    @Override
     public int getTeacherCount() throws Exception {
         initConnection();
         String sql = "select count(*) from teacher";
@@ -163,6 +169,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         return count;
     }
 
+    @Override
     public ArrayList<Teacher> findWithName(String name) throws Exception {
         ArrayList<Teacher> al = new ArrayList<>();
         initConnection();
@@ -174,6 +181,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         return al;
     }
 
+    @Override
     public void updateTeacherInfo(String id, String name, String sex, String password) throws Exception {
         initConnection();
         String sql = "update teacher set name=?, sex=?, password=? where id=?";
@@ -186,7 +194,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         closeConnection();
     }
 
-
+    @Override
     public boolean deleteTeacher(String id) throws Exception {
         classD.deleteTeacherClass(id);
         initConnection();
@@ -197,6 +205,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         return i == 1;
     }
 
+    @Override
     public String getMaxTeacherId() throws Exception {
         initConnection();
         String maxIdString = null;
@@ -215,6 +224,7 @@ public class TeacherDImpl extends BaseDao implements TeacherD {
         return maxIdString;
     }
 
+    @Override
     public List<Class> getClassesWithId(String id) throws Exception {
         initConnection();
         List<Class> listClassesWithIds = new ArrayList<>();

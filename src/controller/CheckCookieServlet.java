@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/check_cookie")
-public class check_cookie extends HttpServlet {
+public class CheckCookieServlet extends HttpServlet {
 
     private final TeacherDImpl teacherDImpl = new TeacherDImpl();
     private final StudentDImpl studentDImpl = new StudentDImpl();

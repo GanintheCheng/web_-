@@ -30,6 +30,9 @@
         }
     </script>
 </head>
+<c:if test="${empty info}">
+    <c:redirect url="http://${header.host}${pageContext.request.contextPath}/login.jsp"/>
+</c:if>
 <body>
 <c:set var="teacher" value="${info}"/>
 <c:set var="scores" value="${onePageScore}"/>
